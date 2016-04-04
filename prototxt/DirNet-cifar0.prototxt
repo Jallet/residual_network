@@ -54,7 +54,7 @@ layer {
             type : "constant"
             value : 0
         }
-        num_output : 16
+        num_output : 8
         kernel_size : 3
         pad : 1
         stride : 1
@@ -106,7 +106,7 @@ layer {
             type : "downsample"
             value : 1
         }
-        num_output : 256
+        num_output : 128
         kernel_size : 4
         pad : 0
         stride : 4
@@ -133,7 +133,7 @@ layer {
             type : "constant"
             value : 0
         }
-        num_output : 16
+        num_output : 8
         kernel_size : 3
         pad : 1
         stride : 1
@@ -189,7 +189,7 @@ layer {
             type : "constant"
             value : 0
         }
-        num_output : 16
+        num_output : 8
         kernel_size : 3
         pad : 1
         stride : 1
@@ -240,7 +240,7 @@ layer {
             type : "downsample"
             value : 1
         }
-        num_output : 256
+        num_output : 128
         kernel_size : 4
         pad : 0
         stride : 4
