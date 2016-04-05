@@ -1,0 +1,292 @@
+name : "CifarResNet1"
+
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  transform_param {
+    mean_file: "/home/liangjiang/code/residual_network/data/cifar10/mean.binaryproto"
+  }
+  data_param {
+    source: "/home/liangjiang/code/residual_network/data/cifar10/cifar10_train_lmdb"
+    batch_size: 128
+    backend: LMDB
+  }
+}
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TEST
+  }
+  transform_param {
+    mean_file: "/home/liangjiang/code/residual_network/data/cifar10/mean.binaryproto"
+  }
+  data_param {
+    source: "/home/liangjiang/code/residual_network/data/cifar10/cifar10_test_lmdb"
+    batch_size: 32
+    backend: LMDB
+  }
+}
+
+layer {
+    name : "conv1"
+    type : "Convolution"
+    bottom : "data"
+    top : "conv1"
+    param {
+      lr_mult: 1
+    }
+    param {
+      lr_mult: 2
+    }
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 8
+        kernel_size : 3
+        pad : 1
+        stride : 1
+    }
+}
+layer {
+	bottom: "conv1"
+	top: "conv1"
+	name: "bn_conv1"
+	type: "BatchNorm"
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+}
+
+layer {
+	bottom: "conv1"
+	top: "conv1"
+	name: "scale_conv1"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+
+layer {
+	bottom: "conv1"
+	top: "conv1"
+	name: "conv1_relu"
+	type: "ReLU"
+}
+
+layer {
+    bottom : "conv1"
+    top : "conv1_down"
+    name : "conv1_down"
+    type : "Convolution"
+    param {
+      lr_mult: 0
+    }
+    convolution_param {
+        weight_filler {
+            type : "downsample"
+            value : 1
+        }
+        num_output : 128
+        kernel_size : 4
+        pad : 0
+        stride : 4
+        bias_term : false
+    }
+}
+#####################32*32size
+layer {
+    name : "conv2_1a"
+    type : "Convolution"
+    bottom : "conv1"
+    top : "conv2_1a"
+    param {
+      lr_mult: 1
+    }
+    param {
+      lr_mult: 2
+    }
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 8
+        kernel_size : 3
+        pad : 1
+        stride : 1
+    }
+}
+layer {
+	bottom: "conv2_1a"
+	top: "conv2_1a"
+	name: "bn_conv2_1a"
+	type: "BatchNorm"
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+}
+
+layer {
+	bottom: "conv2_1a"
+	top: "conv2_1a"
+	name: "scale_conv2_1a"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+layer {
+	bottom: "conv2_1a"
+	top: "conv2_1a"
+	name: "conv2_1a_relu"
+	type: "ReLU"
+}
+layer {
+    name : "conv2_1b"
+    type : "Convolution"
+    bottom : "conv2_1a"
+    top : "conv2_1b"
+    param {
+      lr_mult: 1
+    }
+    param {
+      lr_mult: 2
+    }
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 8
+        kernel_size : 3
+        pad : 1
+        stride : 1
+    }
+}
+layer {
+	bottom: "conv2_1b"
+	top: "conv2_1b"
+	name: "bn_conv2_1b"
+	type: "BatchNorm"
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+}
+
+layer {
+	bottom: "conv2_1b"
+	top: "conv2_1b"
+	name: "scale_conv2_1b"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+
+layer {
+	bottom: "conv2_1b"
+	top: "conv2_1b"
+	name: "conv2_1b_relu"
+	type: "ReLU"
+}
+layer {
+    bottom : "conv2_1b"
+    top : "conv2_down"
+    name : "conv2_down"
+    type : "Convolution"
+    param {
+      lr_mult: 0
+    }
+    convolution_param {
+        weight_filler {
+            type : "downsample"
+            value : 1
+        }
+        num_output : 128
+        kernel_size : 4
+        pad : 0
+        stride : 4
+        bias_term : false
+    }
+}
+
+layer {
+    name : "global_in"
+    bottom : "conv1_down"
+    bottom : "conv2_down"
+    top : "global_in"
+    type : "Eltwise"
+}
+
+layer {
+    name : "global_pool"
+    type : "Pooling"
+    bottom : "global_in"
+    top : "global_pool"
+    pooling_param {
+        pool : AVE 
+        kernel_size : 8
+    }
+}
+
+layer {
+    name : "ip"
+    type : "InnerProduct"
+    bottom : "global_pool"
+    top : "ip"
+    inner_product_param {
+        num_output : 10
+    } 
+}
+layer {
+    name : "accuracy"
+    type : "Accuracy"
+    bottom : "ip"
+    bottom : "label"
+    top : "accuracy"
+}
+layer {
+    name : "loss"
+    type : "SoftmaxWithLoss"
+    bottom : "ip"
+    bottom : "label"
+    top : "loss"
+}
