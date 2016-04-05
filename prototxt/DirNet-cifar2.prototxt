@@ -382,10 +382,144 @@ layer {
 }
 
 layer {
+    name : "conv4_1a"
+    type : "Convolution"
+    bottom : "conv3_1b"
+    top : "conv4_1a"
+    param {
+      lr_mult: 1
+    }
+    param {
+      lr_mult: 2
+    }
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 128
+        kernel_size : 1
+        pad : 0
+        stride : 2
+    }
+}
+layer {
+	bottom: "conv4_1a"
+	top: "conv4_1a"
+	name: "bn_conv4_1a"
+	type: "BatchNorm"
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+}
+
+layer {
+	bottom: "conv4_1a"
+	top: "conv4_1a"
+	name: "scale_conv4_1a"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+layer {
+	bottom: "conv4_1a"
+	top: "conv4_1a"
+	name: "conv4_1a_relu"
+	type: "ReLU"
+}
+layer {
+    name : "conv4_1b"
+    type : "Convolution"
+    bottom : "conv4_1a"
+    top : "conv4_1b"
+    param {
+      lr_mult: 1
+    }
+    param {
+      lr_mult: 2
+    }
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 128
+        kernel_size : 3
+        pad : 1
+        stride : 1
+    }
+}
+layer {
+	bottom: "conv4_1b"
+	top: "conv4_1b"
+	name: "bn_conv4_1b"
+	type: "BatchNorm"
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+}
+
+layer {
+	bottom: "conv4_1b"
+	top: "conv4_1b"
+	name: "scale_conv4_1b"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+
+layer {
+	bottom: "conv4_1b"
+	top: "conv4_1b"
+	name: "conv4_1b_relu"
+	type: "ReLU"
+}
+#layer {
+#    bottom : "conv4_1b"
+#    top : "conv4_down"
+#    name : "conv4_down"
+#    type : "Convolution"
+#    param {
+#      lr_mult: 0
+#    }
+#    convolution_param {
+#        weight_filler {
+#            type : "downsample"
+#            value : 1
+#        }
+#        num_output : 128
+#        kernel_size : 2
+#        pad : 0
+#        stride : 2
+#        bias_term : false
+#    }
+#}
+layer {
     name : "global_in"
     bottom : "conv1_down"
     bottom : "conv2_down"
     bottom : "conv3_down"
+    bottom : "conv4_1b"
     top : "global_in"
     type : "Eltwise"
 }

@@ -67,11 +67,11 @@ loss/DirNet-cifar"
     caffe.set_mode_gpu()
     caffe.set_device(0)
     min_loss = 0
-    for i in range(net_num - 1, -1, -1):
+    for i in range(net_num):
         print i
         loss_path = "{}{}/DirNet-cifar-loss".format(loss_prefix, i)
         execute_cmd = ""
-        if i == net_num - 1:
+        if i == 0:
             execute_cmd = cmd \
             + " " + solver_prefix + str(i) + "-solver.prototxt" \
             + " --loss " + loss_path \
@@ -100,7 +100,7 @@ loss/DirNet-cifar"
             print "Subprocess Error"
             sys.exit()
         preloss = np.load(loss_path + ".npy")
-        if i == net_num - 1:
+        if i == 0:
             minloss = preloss[-1]
         else:
             if minloss > preloss[-1]:
