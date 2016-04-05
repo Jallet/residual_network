@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import sys
-sys.path.insert(0, '/usr/local/caffe/python/')
 import caffe
 import argparse
 import numpy as np

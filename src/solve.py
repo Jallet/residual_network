@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import sys
-sys.path.insert(0, '/usr/local/caffe/python/')
 import caffe
 import argparse
 import subprocess
@@ -99,7 +98,7 @@ loss/DirNet-cifar"
         except:
             print "Subprocess Error"
             sys.exit()
-        preloss = np.load(loss_path + ".npy")
+        preloss = np.load(loss_path)
         if i == 0:
             minloss = preloss[-1]
         else:
