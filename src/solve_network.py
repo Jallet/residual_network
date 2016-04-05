@@ -45,6 +45,8 @@ def main():
     snapshot = args.snapshot
     threshold = args.threshold
     max_iter = args.max_iter
+    record_iter = args.record_iter
+    test_iter = args.test_iter
     
     solver = caffe.get_solver(solver)
     if snapshot != "":
