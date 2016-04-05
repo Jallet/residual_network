@@ -51,8 +51,6 @@ def main():
     record_iter = args.record_iter
     test_iter = args.test_iter
     early_stop = args.early_stop 
-    print early_stop
-    sys.exit()
 
     caffe.set_mode_gpu()
     caffe.set_device(0)
@@ -67,7 +65,7 @@ def main():
         cur_loss = solver.net.blobs["loss"].data
         if i % record_iter == 0:
             loss[i / record_iter] = cur_loss
-        if i % test_iter == 0:
+        if early_stop and (i % test_iter == 0):
             if i == 0:
                 pre_loss = cur_loss
             elif (pre_loss - cur_loss) / pre_loss < threshold:
