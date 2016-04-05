@@ -72,11 +72,24 @@ loss/DirNet-cifar"
         loss_path = "{}{}/DirNet-cifar-loss".format(loss_prefix, i)
         execute_cmd = ""
         if i == net_num - 1:
-            execute_cmd = cmd + " " + solver_prefix + str(i) + "-solver.prototxt" + " --loss " + loss_path + " --threshold " + str(threshold) + " -e"
+            execute_cmd = cmd \
+            + " " + solver_prefix + str(i) + "-solver.prototxt" \
+            + " --loss " + loss_path \
+            + " --threshold " + str(threshold) \
+            + " --max_iter " + str(max_iter) \
+            + " --test_iter " + str(test_iter) \
+            + " -e"
         else:
             snapshot = snapshot_prefix \
                      + str(i + 1) + "/*.caffemodel"
-            execute_cmd = cmd + " " + solver_prefix + str(i) + "-solver.prototxt" + " --loss " + loss_path + " --snapshot " + snapshot + " --threshold " + str(threshold) + " -e"
+            execute_cmd = cmd \
+            + " " + solver_prefix + str(i) + "-solver.prototxt" \
+            + " --loss " + loss_path \
+            + " --snapshot " + snapshot \
+            + " --threshold " + str(threshold) \
+            + " --max_iter " + str(max_iter)\
+            + " --test_iter " + str(test_iter)\
+            + " -e"\
 
 
         print execute_cmd
