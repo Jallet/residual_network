@@ -260,8 +260,6 @@ layer {
     name : "global_pool"
     type : "Pooling"
     bottom : "global_in"
-#    bottom : "conv2_down"
-#    bottom : "conv2_1b"
     top : "global_pool"
     pooling_param {
         pool : AVE 
@@ -284,9 +282,6 @@ layer {
     bottom : "ip"
     bottom : "label"
     top : "accuracy"
-    include {
-        phase : TEST
-    }
 }
 layer {
     name : "loss"
