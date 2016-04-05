@@ -9,12 +9,12 @@ def argparser():
     parser = argparse.ArgumentParser()
     parser.add_argument("solver", 
             help = "Path to the solver to use")
-    parser.add_argument("--loss", 
+    parser.add_argument("--loss", "-l", 
             help = "Path to store loss",
             action = "store", dest = "loss",
             default = "/home/liangjiang/code/residual_network\
                     /results/loss")
-    parser.add_argument("--snapshot",
+    parser.add_argument("--snapshot", "-s", 
             help = "Path to the snapshot to resume",
             action = "store", dest = "snapshot",
             default = "")
@@ -22,7 +22,7 @@ def argparser():
             help = "Threshold to stop trainning early",
             action = "store", dest = "threshold", 
             type = int, default = 1e-3)
-    parser.add_argument("--max_iter", 
+    parser.add_argument("--max_iter", "-m", 
             help = "maximium training iterations",
             action = "store", dest = "max_iter",
             type = int, default = 60000)
@@ -30,10 +30,13 @@ def argparser():
             help = "iterations to test early stop",
             action = "store", dest = "test_iter",
             type = int, default = 200)
-    parser.add_argument("--record_iter", 
+    parser.add_argument("--record_iter", "-r",  
             help = "iterations to record loss",
             action = "store", dest = "record_iter",
             type = int, default = 20)
+    parser.add_argument("--early-stop", "-e", 
+            help = "Whether stop when loss does not decrease",
+            action = "store_true", dest = "early_stop")
     return parser
 
 def main():
@@ -47,7 +50,10 @@ def main():
     max_iter = args.max_iter
     record_iter = args.record_iter
     test_iter = args.test_iter
-    
+    early_stop = args.early_stop 
+    print early_stop
+    sys.exit()
+
     caffe.set_mode_gpu()
     caffe.set_device(0)
     
