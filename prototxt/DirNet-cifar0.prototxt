@@ -1,4 +1,4 @@
-name : "CifarResNet"
+name : "CifarResNet0"
 
 layer {
   name: "data"
