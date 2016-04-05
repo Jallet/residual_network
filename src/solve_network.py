@@ -48,6 +48,9 @@ def main():
     record_iter = args.record_iter
     test_iter = args.test_iter
     
+    caffe.set_mode_gpu()
+    caffe.set_device(0)
+    
     solver = caffe.get_solver(solver)
     if snapshot != "":
         solver.net.copy_from(snapshot)
