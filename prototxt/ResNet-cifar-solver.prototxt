@@ -1,0 +1,17 @@
+net: "/home/jiangliang/code/residual_network/prototxt/ResNet-cifar.prototxt"
+test_iter: 10
+test_interval: 100
+display: 20
+average_loss: 20
+base_lr: 0.1
+lr_policy: "multistep"
+stepvalue: 32000
+stepvalue: 48000
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0001
+snapshot: 1000
+snapshot_prefix: "/home/jiangliang/code/residual_network/results/snapshots/ResNet-cifar"
+test_initialization: false
+solver_mode: GPU
+type: "SGD"
