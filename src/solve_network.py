@@ -20,19 +20,19 @@ def argparser():
             default = "")
     parser.add_argument("--threshold",
             help = "Threshold to stop trainning early",
-            action = store, dest = "threshold", 
+            action = "store", dest = "threshold", 
             type = int, default = 1e-3)
     parser.add_argument("--max_iter", 
             help = "maximium training iterations",
-            action = store, dest = "max_iter",
+            action = "store", dest = "max_iter",
             type = int, default = 60000)
     parser.add_argument("--test_iter", 
             help = "iterations to test early stop",
-            action = store, dest = "test_iter",
+            action = "store", dest = "test_iter",
             type = int, default = 200)
     parser.add_argument("--record_iter", 
             help = "iterations to record loss",
-            action = store, dest = "record_iter",
+            action = "store", dest = "record_iter",
             type = int, default = 20)
     return parser
 
@@ -59,7 +59,7 @@ def main():
         if i % test_iter == 0:
             if i == 0:
                 pre_loss = cur_loss
-            else if (pre_loss - cur_loss) / pre_loss < threshold:
+            elif (pre_loss - cur_loss) / pre_loss < threshold:
                 print "Converged, stopping...."
     solver.snapshot()
     loss = loss[0 : i / record_iter]
