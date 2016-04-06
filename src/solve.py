@@ -38,9 +38,15 @@ def init(net_num):
         child = subprocess.Popen("mkdir -p /home/liangjiang/\
 code/residual_network/results/\
 loss/DirNet-cifar{}".format(i), shell = True)
+        child.wait()
+        child = subprocess.Popen("mkdir -p /home/liangjiang/\
+code/residual_network/results/\
+accuracy/DirNet-cifar{}".format(i), shell = True)
+        child.wait()
         child = subprocess.Popen("mkdir -p /home/liangjiang/\
 code/residual_network/results/\
 snapshots/DirNet-cifar{}".format(i), shell = True)
+        child.wait()
 
 def main():
     clean()
@@ -62,6 +68,9 @@ results/snapshots/DirNet-cifar"
     loss_prefix = "/home/liangjiang/\
 code/residual_network/results/\
 loss/DirNet-cifar"
+    acc_prefix = "/home/liangjiang/\
+code/residual_network/results/\
+accuracy/DirNet-cifar"
     print("cmd: {}".format(cmd))
     print("snapshot_prefix: {}".format(snapshot_prefix))
     print("loss_prefix: {}".format(loss_prefix))
@@ -74,11 +83,13 @@ loss/DirNet-cifar"
     for i in range(net_num):
         print i
         loss_path = "{}{}/DirNet-cifar-loss".format(loss_prefix, i)
+        acc_path = "{}{}/DirNet-cifar-acc".format(acc_prefix, i)
         execute_cmd = ""
         if i == 0:
             execute_cmd = cmd \
             + " " + solver_prefix + str(i) + "-solver.prototxt" \
             + " --loss " + loss_path \
+            + " --accuracy " + acc_path \
             + " --threshold " + str(threshold) \
             + " --max_iter " + str(max_iter) \
             + " --record_iter " + str(record_iter) \
@@ -90,6 +101,7 @@ loss/DirNet-cifar"
             execute_cmd = cmd \
             + " " + solver_prefix + str(i) + "-solver.prototxt" \
             + " --loss " + loss_path \
+            + " --accuracy " + acc_path \
             + " --snapshot " + snapshot \
             + " --threshold " + str(threshold) \
             + " --max_iter " + str(max_iter)\

@@ -13,6 +13,11 @@ def argparser():
             action = "store", dest = "loss",
             default = "/home/liangjiang/code/residual_network\
                     /results/loss")
+    parser.add_argument("--accuracy", "-a", 
+            help = "Path to store accuracy",
+            action = "store", dest = "accuracy",
+            default = "/home/liangjiang/code/residual_network\
+                    /results/accuracy/")
     parser.add_argument("--snapshot", "-s", 
             help = "Path to the snapshot to resume",
             action = "store", dest = "snapshot",
@@ -44,6 +49,7 @@ def main():
     args = parser.parse_args()
     solver = args.solver
     loss_path = args.loss
+    acc_path = args.accuracy
     snapshot = args.snapshot
     threshold = args.threshold
     max_iter = args.max_iter
@@ -58,20 +64,27 @@ def main():
     if snapshot != "":
         solver.net.copy_from(snapshot)
     loss = np.zeros(max_iter / record_iter) 
+    acc = np.zeros(max_iter / record_iter) 
     pre_loss = 0
+    pre_acc = 0
     for i in range(max_iter):
         solver.step(1)
         cur_loss = solver.net.blobs["loss"].data
+        cur_acc = solver.net.blobs["accuracy"].data
         if i % record_iter == 0:
             loss[i / record_iter] = cur_loss
+            acc[i / record_iter] = cur_acc
         if early_stop and (i % test_iter == 0):
             if i == 0:
                 pre_loss = cur_loss
+                pre_acc = cur_acc
             elif (pre_loss - cur_loss) / pre_loss < threshold:
                 print "Converged, stopping...."
     solver.snapshot()
     loss = loss[0 : i / record_iter]
+    acc = acc[0 : i / record_iter]
     np.savetxt(loss_path, loss)
+    np.savetxt(acc_path, acc)
 
 if __name__ == "__main__":
     main()
