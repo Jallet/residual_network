@@ -205,44 +205,45 @@ layer {
 	type: "ReLU"
 }
 
-layer {
-    type : "Convolution"
-    bottom : "conv2_1b"
-    top : "conv2_sub"
-    name : "conv2_sub"
-    param {
-      lr_mult: 1
-    }
-    param {
-      lr_mult: 2
-    }
-    convolution_param {
-        weight_filler {
-            type : "msra"
-        }
-        bias_filler {
-            type : "constant"
-            value : 0
-        }
-        num_output : 32
-        kernel_size : 1
-        stride : 2
-    }
+#layer {
+#    type : "Convolution"
+#    bottom : "conv2_1b"
+#    top : "conv2_sub"
+#    name : "conv2_sub"
+#    param {
+#      lr_mult: 1
+#    }
+#    param {
+#      lr_mult: 2
+#    }
+#    convolution_param {
+#        weight_filler {
+#            type : "msra"
+#        }
+#        bias_filler {
+#            type : "constant"
+#            value : 0
+#        }
+#        num_output : 32
+#        kernel_size : 1
+#        stride : 2
+#    }
+#
+#}
 
-}
-
-layer {
-    name : "conv3_in"
-    top : "conv3_in"
-    type : "Eltwise"
-    bottom : "conv2_1b"
-    bottom : "conv1"
-}
+#layer {
+#    name : "conv3_in"
+#    top : "conv3_in"
+#    type : "Eltwise"
+#    bottom : "conv2_1b"
+#    bottom : "conv1"
+#}
 
 layer {
     name : "conv3_1a"
     type : "Convolution"
-    bottom : "conv3_in"
+#    bottom : "conv3_in"
+    bottom : "conv2_1b"
     top : "conv3_1a"
     param {
       lr_mult: 1
@@ -353,43 +354,44 @@ layer {
 	type: "ReLU"
 }
 
-layer {
-    bottom : "conv3_1b"
-    top : "conv3_sub"
-    type : "Convolution"
-    name : "conv3_sub"
-    param {
-      lr_mult: 1
-    }
-    param {
-      lr_mult: 2
-    }
-    convolution_param {
-        weight_filler {
-            type : "msra"
-        }
-        bias_filler {
-            type : "constant"
-            value : 0
-        }
-        num_output : 128
-        kernel_size : 1
-        stride : 2
-    }
-
-}
-layer {
-    name : "conv4_in"
-    top : "conv4_in"
-    type : "Eltwise"
-    bottom : "conv2_sub"
-    bottom : "conv3_1b"
-}
+#layer {
+#    bottom : "conv3_1b"
+#    top : "conv3_sub"
+#    type : "Convolution"
+#    name : "conv3_sub"
+#    param {
+#      lr_mult: 1
+#    }
+#    param {
+#      lr_mult: 2
+#    }
+#    convolution_param {
+#        weight_filler {
+#            type : "msra"
+#        }
+#        bias_filler {
+#            type : "constant"
+#            value : 0
+#        }
+#        num_output : 128
+#        kernel_size : 1
+#        stride : 2
+#    }
+#
+#}
+#layer {
+#    name : "conv4_in"
+#    top : "conv4_in"
+#    type : "Eltwise"
+#    bottom : "conv2_sub"
+#    bottom : "conv3_1b"
+#}
 
 layer {
     name : "conv4_1a"
     type : "Convolution"
-    bottom : "conv4_in"
+#    bottom : "conv4_in"
+    bottom : "conv3_1b"
     top : "conv4_1a"
     param {
       lr_mult: 1
@@ -500,17 +502,18 @@ layer {
 	type: "ReLU"
 }
 
-layer {
-    name : "global_in"
-    bottom : "conv4_1b"
-    bottom : "conv3_sub"
-    top : "global_in"
-    type : "Eltwise"
-}
+#layer {
+#    name : "global_in"
+#    bottom : "conv4_1b"
+#    bottom : "conv3_sub"
+#    top : "global_in"
+#    type : "Eltwise"
+#}
 
 layer {
     name : "global_pool"
-    bottom : "global_in"
+#    bottom : "global_in"
+    bottom : "conv4_1b"
     top : "global_pool"
     type : "Pooling"
     pooling_param {
