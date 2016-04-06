@@ -58,7 +58,7 @@ snapshots/DirNet-cifar{}".format(i), shell = True)
         child.wait()
 
 def main():
-    max_iter = 6000
+    max_iter = 20000
     test_iter = 200
     record_iter = 1
     threshold = -100
