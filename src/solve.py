@@ -49,7 +49,7 @@ snapshots/DirNet-cifar{}".format(i), shell = True)
         child.wait()
 
 def main():
-    clean()
+    clean(net_num)
     max_iter = 20000
     test_iter = 200
     record_iter = 1
