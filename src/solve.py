@@ -34,6 +34,15 @@ code/residual_network/results/snapshots/DirNet-cifar{}".format(i), shell = True)
         child.wait()
 
 def init(net_num):
+    child = subprocess.Popen("mkdir -p /home/liangjiang/\
+code/residual_network/results/\
+loss/DirNet-cifar", shell = True)
+    child.wait()
+    child = subprocess.Popen("mkdir -p /home/liangjiang/\
+code/residual_network/results/\
+accuracy/DirNet-cifar", shell = True)
+    child.wait()
+
     for i in range(net_num):
         child = subprocess.Popen("mkdir -p /home/liangjiang/\
 code/residual_network/results/\
@@ -49,7 +58,7 @@ snapshots/DirNet-cifar{}".format(i), shell = True)
         child.wait()
 
 def main():
-    max_iter = 20000
+    max_iter = 6000
     test_iter = 200
     record_iter = 1
     threshold = -100
@@ -80,6 +89,15 @@ accuracy/DirNet-cifar"
     caffe.set_mode_gpu()
     caffe.set_device(0)
     min_loss = 0
+    total_loss = []
+    total_acc = []
+    total_loss_path = "/home/liangjiang/\
+code/residual_network/results/\
+loss/DirNet-cifar/DirNet-cifar-loss"
+    total_acc_path = "/home/liangjiang/\
+code/residual_network/results/\
+accuracy/DirNet-cifar/DirNet-cifar-acc"
+    print("cmd: {}".format(cmd))
     for i in range(net_num):
         print i
         loss_path = "{}{}/DirNet-cifar-loss".format(loss_prefix, i)
@@ -118,11 +136,16 @@ accuracy/DirNet-cifar"
             print "Subprocess Error"
             sys.exit()
         preloss = np.loadtxt(loss_path)
+        preacc = np.loadtxt(acc_path)
+        total_loss = np.hstack((total_loss, preloss))
+        total_acc = np.hstack((total_acc, preacc))
         if i == 0:
             minloss = preloss[-1]
         else:
             if minloss > preloss[-1]:
                minloss = preloss[-1]
         print("minloss: {}".format(minloss))
+        np.savetxt(total_loss_path, total_loss)
+        np.savetxt(total_acc_path, total_acc)
 if __name__ == '__main__':
     main()
