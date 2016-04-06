@@ -40,9 +40,10 @@ snapshots/DirNet-cifar{}".format(i), shell = True)
 
 def main():
     clean()
-    max_iter = 20
-    test_iter = 20
-    threshold = 1
+    max_iter = 20000
+    test_iter = 200
+    record_iter = 1
+    threshold = -100
     prototxt_suffix = '.prototxt'
     parser = argparser()
     args = parser.parse_args()
@@ -76,17 +77,19 @@ loss/DirNet-cifar"
             + " --loss " + loss_path \
             + " --threshold " + str(threshold) \
             + " --max_iter " + str(max_iter) \
+            + " --record_iter " + str(record_iter) \
             + " --test_iter " + str(test_iter) \
             + " -e"
         else:
             snapshot = snapshot_prefix \
-                     + str(i + 1) + "/*.caffemodel"
+                     + str(i - 1) + "/*.caffemodel"
             execute_cmd = cmd \
             + " " + solver_prefix + str(i) + "-solver.prototxt" \
             + " --loss " + loss_path \
             + " --snapshot " + snapshot \
             + " --threshold " + str(threshold) \
             + " --max_iter " + str(max_iter)\
+            + " --record_iter " + str(record_iter) \
             + " --test_iter " + str(test_iter)\
             + " -e"\
 
@@ -98,7 +101,7 @@ loss/DirNet-cifar"
         except:
             print "Subprocess Error"
             sys.exit()
-        preloss = np.load(loss_path)
+        preloss = np.loadtxt(loss_path)
         if i == 0:
             minloss = preloss[-1]
         else:
