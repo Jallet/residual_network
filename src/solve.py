@@ -49,7 +49,6 @@ snapshots/DirNet-cifar{}".format(i), shell = True)
         child.wait()
 
 def main():
-    clean(net_num)
     max_iter = 20000
     test_iter = 200
     record_iter = 1
@@ -76,6 +75,7 @@ accuracy/DirNet-cifar"
     print("loss_prefix: {}".format(loss_prefix))
     it = 0
     min_loss = 0
+    clean(net_num)
     init(net_num)
     caffe.set_mode_gpu()
     caffe.set_device(0)
