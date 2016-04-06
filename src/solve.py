@@ -23,11 +23,15 @@ residual_network/prototxt/DirectNet''')
 residual_network/prototxt/DirNet-cifar')
     return parser
 
-def clean():
-    print "clean"
-    child = subprocess.Popen("rm -rf /home/liangjiang/\
-code/residual_network/results/*", shell = True)
-    child.wait()
+def clean(net_num):
+    print "cleaning"
+    for i in range(net_num):
+        child = subprocess.Popen("rm -rf /home/liangjiang/\
+code/residual_network/results/loss/DirNet-cifar{}".format(i), shell = True)
+        child.wait()
+        child = subprocess.Popen("rm -rf /home/liangjiang/\
+code/residual_network/results/snapshots/DirNet-cifar{}".format(i), shell = True)
+        child.wait()
 
 def init(net_num):
     for i in range(net_num):
