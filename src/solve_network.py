@@ -81,8 +81,8 @@ def main():
             elif (pre_loss - cur_loss) / pre_loss < threshold:
                 print "Converged, stopping...."
     solver.snapshot()
-    loss = loss[0 : i / record_iter]
-    acc = acc[0 : i / record_iter]
+    loss = loss[0 : i / record_iter + 1]
+    acc = acc[0 : i / record_iter + 1]
     np.savetxt(loss_path, loss)
     np.savetxt(acc_path, acc)
 
