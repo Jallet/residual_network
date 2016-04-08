@@ -9,7 +9,7 @@ stepvalue: 32000
 stepvalue: 48000
 gamma: 0.1
 momentum: 0.9
-weight_decay: 0.001
+weight_decay: 0.0001
 snapshot: 20000
 snapshot_prefix: "/home/liangjiang/code/residual_network/results/snapshots/ResNet-cifar/ResNet-cifar"
 test_initialization: false
