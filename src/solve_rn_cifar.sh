@@ -6,4 +6,4 @@ mkdir -p /home/liangjiang/code/residual_network/results/loss/ResNet-cifar
 mkdir -p /home/liangjiang/code/residual_network/results/accuracy/ResNet-cifar
 mkdir -p  /home/liangjiang/code/residual_network/results/snapshots/ResNet-cifar
 
-/home/liangjiang/code/residual_network/src/solve_network.py /home/liangjiang/code/residual_network/prototxt/ResNet-cifar-solver.prototxt -l /home/liangjiang/code/residual_network/results/loss/ResNet-cifar/ResNet-cifar-loss -a /home/liangjiang/code/residual_network/results/accuracy/ResNet-cifar/ResNet-cifar-acc --max_iter 60000  --record_iter 1
+/home/liangjiang/code/residual_network/src/solve_network.py /home/liangjiang/code/residual_network/prototxt/ResNet-cifar-solver.prototxt --train-loss /home/liangjiang/code/residual_network/results/loss/ResNet-cifar/ResNet-cifar-train-loss --train-acc /home/liangjiang/code/residual_network/results/accuracy/ResNet-cifar/ResNet-cifar-train-acc --val-loss /home/liangjiang/code/residual_network/results/loss/ResNet-cifar/ResNet-cifar-val-loss --val-acc /home/liangjiang/code/residual_network/results/accuracy/ResNet-cifar/ResNet-cifar-val-acc --max_iter 20000 
