@@ -47,7 +47,7 @@ def argparser():
     parser.add_argument("--record_iter", "-r",  
             help = "iterations to record loss",
             action = "store", dest = "record_iter",
-            type = int, default = 20)
+            type = int, default = 1)
     parser.add_argument("--early-stop", "-e", 
             help = "Whether stop when loss does not decrease",
             action = "store_true", dest = "early_stop")
