@@ -73,13 +73,6 @@ def main():
     caffe.set_device(0)
     
     solver = caffe.get_solver(solver)
-    #test_nets = solver.test_nets
-    #print "type of test_nets: ", type(test_nets)
-    #print "len of test_nets: ", len(test_nets)
-    #test_net = test_nets[0]
-    #print "type of test_net: ", type(test_net)
-    #print test_net.blobs["loss"].data
-    #sys.exit()
 
     if snapshot != "":
         solver.net.copy_from(snapshot)
@@ -95,7 +88,6 @@ def main():
         cur_train_acc = solver.net.blobs["accuracy"].data
         cur_val_loss = solver.test_nets[0].blobs["loss"].data
         cur_val_acc = solver.test_nets[0].blobs["accuracy"].data
-        print("cur_val_loss: {}, cur_val_acc: {}".format(cur_val_loss, cur_val_acc))
         if i % record_iter == 0:
             train_loss[i / record_iter] = cur_train_loss
             train_acc[i / record_iter] = cur_train_acc
