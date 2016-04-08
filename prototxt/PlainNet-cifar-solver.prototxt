@@ -1,0 +1,17 @@
+net: "/home/liangjiang/code/residual_network/prototxt/PlainNet-cifar.prototxt"
+test_iter: 1
+test_interval: 1
+display: 1
+average_loss: 1
+base_lr: 0.01
+lr_policy: "multistep"
+stepvalue: 32000
+stepvalue: 48000
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0001
+snapshot: 20000
+snapshot_prefix: "/home/liangjiang/code/residual_network/results/snapshots/PlainNet-cifar/PlainNet-cifar"
+test_initialization: false
+solver_mode: GPU
+type: "SGD"
