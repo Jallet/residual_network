@@ -104,7 +104,7 @@ layer {
     convolution_param {
         weight_filler {
             type : "downsample"
-            value : 0
+            value : 0.6
         }
         num_output : 128
         kernel_size : 4
@@ -238,7 +238,7 @@ layer {
     convolution_param {
         weight_filler {
             type : "downsample"
-            value : 0
+            value : 0.6
         }
         num_output : 128
         kernel_size : 4
@@ -371,7 +371,7 @@ layer {
     convolution_param {
         weight_filler {
             type : "downsample"
-            value : 0
+            value : 0.6
         }
         num_output : 128
         kernel_size : 2
