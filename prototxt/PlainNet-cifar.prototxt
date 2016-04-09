@@ -1,4 +1,4 @@
-name : "ResNet-cifar"
+name : "PlainNet-cifar"
 layer {
   name: "cifar"
   type: "Data"
