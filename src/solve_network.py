@@ -99,7 +99,7 @@ def main():
                 pre_train_acc = cur_train_acc
                 pre_val_loss = cur_val_loss
                 pre_val_acc = cur_val_acc
-            elif (pre_loss - cur_loss) / pre_loss < threshold:
+            elif (pre_train_loss - cur_train_loss) / pre_train_loss < threshold:
                 print "Converged, stopping...."
     solver.snapshot()
     train_loss = train_loss[0 : i / record_iter + 1]
