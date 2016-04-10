@@ -41,6 +41,13 @@ def main():
         print("{}, {}, ({})".format(k, v[0].data.shape, num))
         param_num = param_num + num
     print "num of params: {}".format(param_num)
+    param = net.params["scale_conv1_down"][0].data
+    bias = net.params["scale_conv1_down"][1].data
+    param = net.params["scale_conv2_down"][0].data
+    bias = net.params["scale_conv2_down"][1].data
+    param = net.params["scale_conv3_down"][0].data
+    bias = net.params["scale_conv3_down"][1].data
+    print "finish"
     
 if __name__ == "__main__":
     main()

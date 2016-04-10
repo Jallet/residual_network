@@ -113,6 +113,15 @@ layer {
         bias_term : false
     }
 }
+layer {
+	bottom: "conv1_down"
+	top: "conv1_down"
+	name: "scale_conv1_down"
+	type: "Scale"
+	scale_param {
+		bias_term: false
+	}
+}
 #####################32*32size
 layer {
     name : "conv2_1a"
@@ -248,6 +257,15 @@ layer {
     }
 }
 layer {
+	bottom: "conv2_down"
+	top: "conv2_down"
+	name: "scale_conv2_down"
+	type: "Scale"
+	scale_param {
+		bias_term: false
+	}
+}
+layer {
     name : "conv3_1a"
     type : "Convolution"
     bottom : "conv2_1b"
@@ -379,6 +397,16 @@ layer {
         stride : 2
         bias_term : false
     }
+}
+
+layer {
+	bottom: "conv3_down"
+	top: "conv3_down"
+	name: "scale_conv3_down"
+	type: "Scale"
+	scale_param {
+		bias_term: false
+	}
 }
 
 layer {
@@ -530,7 +558,7 @@ layer {
     bottom : "global_in"
     top : "global_pool"
     pooling_param {
-        pool : AVE 
+        pool : MAX
         kernel_size : 8
     }
 }
