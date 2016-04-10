@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, caffe_root + 'python')
 import caffe
 import argparse
+import matplotlib.pyplot as plt
 
 def argparser():
     parser = argparse.ArgumentParser()
@@ -42,12 +43,33 @@ def main():
         param_num = param_num + num
     print "num of params: {}".format(param_num)
     param = net.params["scale_conv1_down"][0].data
+    plt.figure(1)
+    plt.hist(param, 50, facecolor = 'g')
+    plt.title("param of scale_conv1_down")
     bias = net.params["scale_conv1_down"][1].data
+    plt.figure(2)
+    plt.hist(bias, 50, facecolor = 'g')
+    plt.title("bias of scale_conv1_down")
+
     param = net.params["scale_conv2_down"][0].data
+    plt.figure(3)
+    plt.hist(param, 50, facecolor = 'g')
+    plt.title("param of scale_conv2_down")
     bias = net.params["scale_conv2_down"][1].data
+    plt.figure(4)
+    plt.hist(bias, 50, facecolor = 'g')
+    plt.title("bias of scale_conv2_down")
+
     param = net.params["scale_conv3_down"][0].data
+    plt.figure(5)
+    plt.hist(param, 50, facecolor = 'g')
+    plt.title("param of scale_conv3_down")
     bias = net.params["scale_conv3_down"][1].data
+    plt.figure(6)
+    plt.hist(bias, 50, facecolor = 'g')
+    plt.title("bias of scale_conv3_down")
+    plt.show()
+
     print "finish"
-    
 if __name__ == "__main__":
     main()
