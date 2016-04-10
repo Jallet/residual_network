@@ -8,13 +8,20 @@ import argparse
 def argparser():
     parser = argparse.ArgumentParser()
     parser.add_argument("network", help = 'network to test')
+    parser.add_argument("-s", "--snapshot", 
+            help = 'snapshot the network to use', 
+            action = 'store', default = "", dest = "snapshot")
     return parser
 
 def main():
     parser = argparser()
     args = parser.parse_args()
     network = args.network
-    net = caffe.Net(network, caffe.TRAIN)
+    snapshot = args.snapshot
+    if snapshot == "":
+        net = caffe.Net(network, caffe.TRAIN)
+    else:
+        net = caffe.Net(network, snapshot, caffe.TRAIN)
     print 'shape of data:'
     total_size = 0
     for k, v in net.blobs.items():
@@ -34,6 +41,13 @@ def main():
         print("{}, {}, ({})".format(k, v[0].data.shape, num))
         param_num = param_num + num
     print "num of params: {}".format(param_num)
+    param = net.params["scale_conv1_down"][0].data
+    bias = net.params["scale_conv1_down"][1].data
+    param = net.params["scale_conv2_down"][0].data
+    bias = net.params["scale_conv2_down"][1].data
+    param = net.params["scale_conv3_down"][0].data
+    bias = net.params["scale_conv3_down"][1].data
+    print "finish"
     
 if __name__ == "__main__":
     main()
