@@ -81,6 +81,12 @@ layer {
 	top: "conv1"
 	name: "scale_conv1"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -118,8 +124,18 @@ layer {
 	top: "conv1_down"
 	name: "scale_conv1_down"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
-		bias_term: false
+        filler {
+            type : "constant"
+            value : 0
+        }
+		bias_term: true
 	}
 }
 #####################32*32size
@@ -169,6 +185,12 @@ layer {
 	top: "conv2_1a"
 	name: "scale_conv2_1a"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -225,6 +247,12 @@ layer {
 	top: "conv2_1b"
 	name: "scale_conv2_1b"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -261,8 +289,18 @@ layer {
 	top: "conv2_down"
 	name: "scale_conv2_down"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
-		bias_term: false
+        filler {
+            type : "constant"
+            value : 0
+        }
+		bias_term: true
 	}
 }
 layer {
@@ -311,6 +349,12 @@ layer {
 	top: "conv3_1a"
 	name: "scale_conv3_1a"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -367,6 +411,12 @@ layer {
 	top: "conv3_1b"
 	name: "scale_conv3_1b"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -404,8 +454,18 @@ layer {
 	top: "conv3_down"
 	name: "scale_conv3_down"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
-		bias_term: false
+        filler {
+            type : "constant"
+            value : 0
+        }
+		bias_term: true
 	}
 }
 
@@ -455,6 +515,12 @@ layer {
 	top: "conv4_1a"
 	name: "scale_conv4_1a"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -511,6 +577,12 @@ layer {
 	top: "conv4_1b"
 	name: "scale_conv4_1b"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}

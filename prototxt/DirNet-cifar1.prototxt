@@ -81,6 +81,12 @@ layer {
 	top: "conv1"
 	name: "scale_conv1"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -112,6 +118,25 @@ layer {
         stride : 4
         bias_term : false
     }
+}
+layer {
+	bottom: "conv1_down"
+	top: "conv1_down"
+	name: "scale_conv1_down"
+	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
+	scale_param {
+        filler {
+            type : "constant"
+            value : 0
+        }
+		bias_term: true
+	}
 }
 #####################32*32size
 layer {
@@ -160,6 +185,12 @@ layer {
 	top: "conv2_1a"
 	name: "scale_conv2_1a"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -216,6 +247,12 @@ layer {
 	top: "conv2_1b"
 	name: "scale_conv2_1b"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -246,6 +283,25 @@ layer {
         stride : 4
         bias_term : false
     }
+}
+layer {
+	bottom: "conv2_down"
+	top: "conv2_down"
+	name: "scale_conv2_down"
+	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
+	scale_param {
+        filler {
+            type : "constant"
+            value : 0
+        }
+		bias_term: true
+	}
 }
 layer {
     name : "conv3_1a"
@@ -293,6 +349,12 @@ layer {
 	top: "conv3_1a"
 	name: "scale_conv3_1a"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -349,6 +411,12 @@ layer {
 	top: "conv3_1b"
 	name: "scale_conv3_1b"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -380,6 +448,25 @@ layer {
         bias_term : false
     }
 }
+layer {
+	bottom: "conv3_down"
+	top: "conv3_down"
+	name: "scale_conv3_down"
+	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
+	scale_param {
+        filler {
+            type : "constant"
+            value : 0
+        }
+		bias_term: true
+	}
+}
 
 layer {
     name : "global_in"
@@ -396,7 +483,7 @@ layer {
     bottom : "global_in"
     top : "global_pool"
     pooling_param {
-        pool : AVE 
+        pool : MAX
         kernel_size : 8
     }
 }
@@ -406,6 +493,12 @@ layer {
     type : "InnerProduct"
     bottom : "global_pool"
     top : "ip"
+    param {
+        lr_mult: 1
+    }
+    param {
+        lr_mult: 2
+    }
     inner_product_param {
         num_output : 10
     } 
