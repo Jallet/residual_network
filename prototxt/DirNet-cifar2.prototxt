@@ -138,6 +138,22 @@ layer {
 		bias_term: true
 	}
 }
+layer {
+	bottom: "conv1_down"
+	top: "conv1_down"
+	name: "scale_conv1_down_c"
+	type: "Scale"
+    param {
+        lr_mult : 0
+    }
+	scale_param {
+        filler {
+            type : "constant"
+            value : 0.16
+        }
+        bias_term: false
+	}
+}
 #####################32*32size
 layer {
     name : "conv2_1a"
@@ -301,6 +317,22 @@ layer {
             value : 1
         }
 		bias_term: true
+	}
+}
+layer {
+	bottom: "conv2_down"
+	top: "conv2_down"
+	name: "scale_conv2_down_c"
+	type: "Scale"
+    param {
+        lr_mult : 0
+    }
+	scale_param {
+        filler {
+            type : "constant"
+            value : 0.16
+        }
+        bias_term: false
 	}
 }
 layer {
@@ -468,6 +500,22 @@ layer {
 		bias_term: true
 	}
 }
+layer {
+	bottom: "conv3_down"
+	top: "conv3_down"
+	name: "scale_conv3_down_c"
+	type: "Scale"
+    param {
+        lr_mult : 0
+    }
+	scale_param {
+        filler {
+            type : "constant"
+            value : 0.4
+        }
+        bias_term: false
+	}
+}
 
 layer {
     name : "conv4_1a"
@@ -632,6 +680,22 @@ layer {
             value : 0.2
         }
 		bias_term: true
+	}
+}
+layer {
+	bottom: "conv4_down"
+	top: "conv4_down"
+	name: "scale_conv4_down_c"
+	type: "Scale"
+    param {
+        lr_mult : 0
+    }
+	scale_param {
+        filler {
+            type : "constant"
+            value : 1
+        }
+        bias_term: false
 	}
 }
 layer {
