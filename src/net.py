@@ -68,6 +68,15 @@ def main():
     plt.figure(6)
     plt.hist(bias, 50, facecolor = 'g')
     plt.title("bias of scale_conv3_down")
+
+    param = net.params["scale_conv4_down"][0].data
+    plt.figure(7)
+    plt.hist(param, 50, facecolor = 'g')
+    plt.title("param of scale_conv4_down")
+    bias = net.params["scale_conv4_down"][1].data
+    plt.figure(8)
+    plt.hist(bias, 50, facecolor = 'g')
+    plt.title("bias of scale_conv4_down")
     plt.show()
 
     print "finish"
