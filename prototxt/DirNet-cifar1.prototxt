@@ -41,10 +41,10 @@ layer {
     bottom : "data"
     top : "conv1"
     param {
-      lr_mult: 0.8
+      lr_mult: 1
     }
     param {
-      lr_mult: 1.6
+      lr_mult: 2
     }
     convolution_param {
         weight_filler {
@@ -145,10 +145,10 @@ layer {
     bottom : "conv1"
     top : "conv2_1a"
     param {
-      lr_mult: 0.8
+      lr_mult: 1
     }
     param {
-      lr_mult: 1.6
+      lr_mult: 2
     }
     convolution_param {
         weight_filler {
@@ -207,10 +207,10 @@ layer {
     bottom : "conv2_1a"
     top : "conv2_1b"
     param {
-      lr_mult: 0.8
+      lr_mult: 1
     }
     param {
-      lr_mult: 1.6
+      lr_mult: 2
     }
     convolution_param {
         weight_filler {
