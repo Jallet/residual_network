@@ -1,8 +1,8 @@
 net: "/home/liangjiang/code/residual_network/prototxt/ResNet-cifar.prototxt"
-test_iter: 1
-test_interval: 1
-display: 1
-average_loss: 1
+test_iter: 4
+test_interval: 20
+display: 20
+average_loss: 20
 base_lr: 0.01
 lr_policy: "multistep"
 stepvalue: 32000
