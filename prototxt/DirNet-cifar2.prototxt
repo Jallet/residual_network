@@ -629,7 +629,7 @@ layer {
 	scale_param {
         filler {
             type : "constant"
-            value : 0
+            value : 0.2
         }
 		bias_term: true
 	}
