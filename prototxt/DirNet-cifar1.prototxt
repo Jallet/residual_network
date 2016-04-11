@@ -133,7 +133,7 @@ layer {
 	scale_param {
         filler {
             type : "constant"
-            value : 0
+            value : 1
         }
 		bias_term: true
 	}
@@ -298,7 +298,7 @@ layer {
 	scale_param {
         filler {
             type : "constant"
-            value : 0
+            value : 1
         }
 		bias_term: true
 	}
@@ -483,7 +483,7 @@ layer {
     bottom : "global_in"
     top : "global_pool"
     pooling_param {
-        pool : MAX
+        pool : AVE
         kernel_size : 8
     }
 }

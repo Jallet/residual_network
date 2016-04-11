@@ -441,11 +441,7 @@ layer {
     pooling_param {
         kernel_size : 8
         stride : 8
-<<<<<<< HEAD
         pool : AVE
-=======
-        pool : MAX
->>>>>>> master
     }
 }
 

@@ -318,7 +318,7 @@ layer {
     bottom : "global_in"
     top : "global_pool"
     pooling_param {
-        pool : MAX
+        pool : AVE
         kernel_size : 8
     }
 }
