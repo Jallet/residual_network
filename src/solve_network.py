@@ -11,23 +11,19 @@ def argparser():
     parser.add_argument("--train-loss", "-tl", 
             help = "Path to store trainning loss",
             action = "store", dest = "train_loss",
-            default = "/home/liangjiang/code/residual_network\
-                    /results/train-loss")
+            default = "results/train-loss")
     parser.add_argument("--train-accuracy", "-ta", 
             help = "Path to store accuracy",
             action = "store", dest = "train_accuracy",
-            default = "/home/liangjiang/code/residual_network\
-                    /results/train-accuracy")
+            default = "results/train-accuracy")
     parser.add_argument("--val-loss", "-vl", 
             help = "Path to store valning loss",
             action = "store", dest = "val_loss",
-            default = "/home/liangjiang/code/residual_network\
-                    /results/val-loss")
+            default = "results/val-loss")
     parser.add_argument("--val-accuracy", "-va", 
             help = "Path to store accuracy",
             action = "store", dest = "val_accuracy",
-            default = "/home/liangjiang/code/residual_network\
-                    /results/val-accuracy")
+            default = "results/val-accuracy")
     parser.add_argument("--snapshot", "-s", 
             help = "Path to the snapshot to resume",
             action = "store", dest = "snapshot",
