@@ -19,6 +19,9 @@ def argparser():
             help = 'path of solver',
             action = 'store', dest = 'solver_prefix', 
             default = 'prototxt/DyResNet/ResNet-cifar')
+    parser.add_argument("-m", "--max_iter",
+            help = 'maximum iterations the network will train',
+            action = 'append', dest = max_iter)
     return parser
 
 def clean(net_num):
@@ -46,7 +49,8 @@ def init(net_num):
         child.wait()
 
 def main():
-    max_iter = 2000
+    default_max_iter = 6000
+    max_iter = [500, 500, 500, 500, 500, 500, 500, 500, 50000]
     test_iter = 200
     record_iter = 20
     threshold = -100
