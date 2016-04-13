@@ -9,6 +9,7 @@ layer {
   }
   transform_param {
     mean_file: "data/cifar10/mean.binaryproto"
+    mirror : true
   }
   data_param {
     source: "data/cifar10/cifar10_train_lmdb"
@@ -198,10 +199,17 @@ layer {
 	}
 }
 
+layer {
+    type : "Eltwise"
+    name : "conv2_1"
+    top : "conv2_1"
+    bottom : "conv2_1b"
+    bottom : "conv1"
+}
 
 layer {
-	bottom: "conv2_1b"
-	top: "conv2_1b"
+	bottom: "conv2_1"
+	top: "conv2_1"
 	name: "conv2_1_relu"
 	type: "ReLU"
 }
@@ -209,7 +217,7 @@ layer {
 layer {
     name : "conv2_2a"
     type : "Convolution"
-    bottom : "conv2_1b"
+    bottom : "conv2_1"
     top : "conv2_2a"
     param {
       lr_mult: 1
@@ -256,25 +264,16 @@ layer {
 		bias_term: true
 	}
 }
-
 layer {
-    type : "Eltwise"
-    name : "conv2_1"
-    top : "conv2_1"
-    bottom : "conv2_2a"
-    bottom : "conv1"
-}
-
-layer {
-	bottom: "conv2_1"
-	top: "conv2_1"
+	bottom: "conv2_2a"
+	top: "conv2_2a"
 	name: "conv2_2a_relu"
 	type: "ReLU"
 }
 layer {
     name : "conv2_2b"
     type : "Convolution"
-    bottom : "conv2_1"
+    bottom : "conv2_2a"
     top : "conv2_2b"
     param {
       lr_mult: 1
@@ -322,10 +321,17 @@ layer {
 	}
 }
 
+layer {
+    type : "Eltwise"
+    name : "conv2_2"
+    top : "conv2_2"
+    bottom : "conv2_2b"
+    bottom : "conv2_1"
+}
 
 layer {
-	bottom: "conv2_2b"
-	top: "conv2_2b"
+	bottom: "conv2_2"
+	top: "conv2_2"
 	name: "conv2_2_relu"
 	type: "ReLU"
 }
@@ -333,7 +339,7 @@ layer {
 layer {
     name : "conv2_3a"
     type : "Convolution"
-    bottom : "conv2_2b"
+    bottom : "conv2_2"
     top : "conv2_3a"
     param {
       lr_mult: 1
@@ -442,7 +448,7 @@ layer {
     name : "conv2_3"
     top : "conv2_3"
     bottom : "conv2_3b"
-    bottom : "conv2_1"
+    bottom : "conv2_2"
 }
 
 layer {
@@ -610,10 +616,17 @@ layer {
 	}
 }
 
+layer {
+    type : "Eltwise"
+    name : "conv3_1"
+    top : "conv3_1"
+    bottom : "conv3_1b"
+    bottom : "conv2_sub"
+}
 
 layer {
-	bottom: "conv3_1b"
-	top: "conv3_1b"
+	bottom: "conv3_1"
+	top: "conv3_1"
 	name: "conv3_1_relu"
 	type: "ReLU"
 }
@@ -622,7 +635,7 @@ layer {
     name : "conv3_2a"
     type : "Convolution"
 #    bottom : "conv3_in"
-    bottom : "conv3_1b"
+    bottom : "conv3_1"
     top : "conv3_2a"
     param {
       lr_mult: 1
@@ -670,23 +683,15 @@ layer {
 	}
 }
 layer {
-    type : "Eltwise"
-    name : "conv3_1"
-    top : "conv3_1"
-    bottom : "conv3_2a"
-    bottom : "conv2_sub"
-}
-
-layer {
-	bottom: "conv3_1"
-	top: "conv3_1"
+	bottom: "conv3_2a"
+	top: "conv3_2a"
 	name: "conv3_2a_relu"
 	type: "ReLU"
 }
 layer {
     name : "conv3_2b"
     type : "Convolution"
-    bottom : "conv3_1"
+    bottom : "conv3_2a"
     top : "conv3_2b"
     param {
       lr_mult: 1
@@ -735,8 +740,16 @@ layer {
 }
 
 layer {
-	bottom: "conv3_2b"
-	top: "conv3_2b"
+    type : "Eltwise"
+    name : "conv3_2"
+    top : "conv3_2"
+    bottom : "conv3_2b"
+    bottom : "conv3_1"
+}
+
+layer {
+	bottom: "conv3_2"
+	top: "conv3_2"
 	name: "conv3_2_relu"
 	type: "ReLU"
 }
@@ -744,7 +757,7 @@ layer {
     name : "conv3_3a"
     type : "Convolution"
 #    bottom : "conv3_in"
-    bottom : "conv3_2b"
+    bottom : "conv3_2"
     top : "conv3_3a"
     param {
       lr_mult: 1
@@ -853,7 +866,7 @@ layer {
     name : "conv3_3"
     top : "conv3_3"
     bottom : "conv3_3b"
-    bottom : "conv3_1"
+    bottom : "conv3_2"
 }
 
 layer {
@@ -1021,17 +1034,24 @@ layer {
 	}
 }
 
+layer {
+    type : "Eltwise"
+    name : "conv4_1"
+    top : "conv4_1"
+    bottom : "conv3_sub"
+    bottom : "conv4_1b"
+}
 
 layer {
-	bottom: "conv4_1b"
-	top: "conv4_1b"
+	bottom: "conv4_1"
+	top: "conv4_1"
 	name: "conv4_1_relu"
 	type: "ReLU"
 }
 layer {
     name : "conv4_2a"
     type : "Convolution"
-    bottom : "conv4_1b"
+    bottom : "conv4_1"
     top : "conv4_2a"
     param {
       lr_mult: 1
@@ -1079,22 +1099,15 @@ layer {
 	}
 }
 layer {
-    type : "Eltwise"
-    name : "conv4_1"
-    top : "conv4_1"
-    bottom : "conv3_sub"
-    bottom : "conv4_2a"
-}
-layer {
-	bottom: "conv4_1"
-	top: "conv4_1"
+	bottom: "conv4_2a"
+	top: "conv4_2a"
 	name: "conv4_2a_relu"
 	type: "ReLU"
 }
 layer {
     name : "conv4_2b"
     type : "Convolution"
-    bottom : "conv4_1"
+    bottom : "conv4_2a"
     top : "conv4_2b"
     param {
       lr_mult: 1
@@ -1143,15 +1156,23 @@ layer {
 }
 
 layer {
-	bottom: "conv4_2b"
-	top: "conv4_2b"
+    type : "Eltwise"
+    name : "conv4_2"
+    top : "conv4_2"
+    bottom : "conv4_1"
+    bottom : "conv4_2b"
+}
+
+layer {
+	bottom: "conv4_2"
+	top: "conv4_2"
 	name: "conv4_2_relu"
 	type: "ReLU"
 }
 layer {
     name : "conv4_3a"
     type : "Convolution"
-    bottom : "conv4_2b"
+    bottom : "conv4_2"
     top : "conv4_3a"
     param {
       lr_mult: 1
@@ -1259,7 +1280,7 @@ layer {
     type : "Eltwise"
     name : "conv4_3"
     top : "conv4_3"
-    bottom : "conv4_1"
+    bottom : "conv4_2"
     bottom : "conv4_3b"
 }
 
