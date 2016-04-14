@@ -50,7 +50,7 @@ def init(net_num):
 
 def main():
     default_max_iter = 6000
-    max_iters = [15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000]
+    max_iters = [30000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000]
     test_iter = 200
     record_iter = 20
     threshold = -100
