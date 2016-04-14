@@ -21,7 +21,7 @@ def argparser():
             default = 'prototxt/DyResNet/ResNet-cifar')
     parser.add_argument("-m", "--max_iter",
             help = 'maximum iterations the network will train',
-            action = 'append', dest = max_iter)
+            action = 'append', dest = "max_iter")
     return parser
 
 def clean(net_num):
@@ -50,7 +50,7 @@ def init(net_num):
 
 def main():
     default_max_iter = 6000
-    max_iter = [500, 500, 500, 500, 500, 500, 500, 500, 50000]
+    max_iters = [15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000]
     test_iter = 200
     record_iter = 20
     threshold = -100
@@ -84,6 +84,8 @@ def main():
     total_val_acc_path = "results/accuracy/ResNet-cifar/ResNet-cifar-acc.val"
     print("cmd: {}".format(cmd))
     for i in range(net_num):
+        max_iter = max_iters[i]
+        print max_iter
         print "Training ResNet-cifar", i
         loss_path = "{}{}/ResNet-cifar-loss".format(loss_prefix, i)
         train_loss = loss_path + ".train"

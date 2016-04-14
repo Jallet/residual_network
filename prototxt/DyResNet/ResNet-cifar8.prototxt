@@ -1182,7 +1182,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "gaussian"
+            std : 0.00001
         }
         bias_filler {
             type : "constant"
@@ -1238,7 +1239,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "gaussian"
+            std : 0.00001
         }
         bias_filler {
             type : "constant"
