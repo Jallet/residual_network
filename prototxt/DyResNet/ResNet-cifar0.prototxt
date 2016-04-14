@@ -80,6 +80,12 @@ layer {
 	top: "conv1"
 	name: "scale_conv1"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -138,6 +144,12 @@ layer {
 	top: "conv2_1a"
 	name: "scale_conv2_1a"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -194,6 +206,12 @@ layer {
 	top: "conv2_1b"
 	name: "scale_conv2_1b"
 	type: "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
 	scale_param {
 		bias_term: true
 	}
@@ -232,6 +250,12 @@ layer {
     bottom : "global_pool"
     top : "ip"
     type : "InnerProduct"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
     inner_product_param {
         num_output : 10
     }
