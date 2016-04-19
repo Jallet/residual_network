@@ -9,7 +9,6 @@ layer {
   }
   transform_param {
     mean_file: "data/cifar10/mean.binaryproto"
-    mirror : true
   }
   data_param {
     source: "data/cifar10/cifar10_train_lmdb"
@@ -149,9 +148,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv2_1a_sum"
+    top : "conv2_1a_sum"
+    bottom : "conv2_1a"
+    bottom : "conv1"
+}
+layer {
     name : "conv2_1b"
     type : "Convolution"
-    bottom : "conv2_1a"
+    bottom : "conv2_1a_sum"
     top : "conv2_1b"
     param {
       lr_mult: 1
@@ -200,19 +206,20 @@ layer {
 }
 
 layer {
+	bottom: "conv2_1b"
+	top: "conv2_1b"
+	name: "conv2_1_relu"
+	type: "ReLU"
+}
+
+layer {
     type : "Eltwise"
     name : "conv2_1"
     top : "conv2_1"
     bottom : "conv2_1b"
-    bottom : "conv1"
+    bottom : "conv2_1a_sum"
 }
 
-layer {
-	bottom: "conv2_1"
-	top: "conv2_1"
-	name: "conv2_1_relu"
-	type: "ReLU"
-}
 
 layer {
     name : "conv2_2a"
@@ -271,9 +278,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv2_2a_sum"
+    top : "conv2_2a_sum"
+    bottom : "conv2_1"
+    bottom : "conv2_2a"
+}
+layer {
     name : "conv2_2b"
     type : "Convolution"
-    bottom : "conv2_2a"
+    bottom : "conv2_2a_sum"
     top : "conv2_2b"
     param {
       lr_mult: 1
@@ -322,19 +336,20 @@ layer {
 }
 
 layer {
+	bottom: "conv2_2b"
+	top: "conv2_2b"
+	name: "conv2_2_relu"
+	type: "ReLU"
+}
+
+layer {
     type : "Eltwise"
     name : "conv2_2"
     top : "conv2_2"
     bottom : "conv2_2b"
-    bottom : "conv2_1"
+    bottom : "conv2_2a_sum"
 }
 
-layer {
-	bottom: "conv2_2"
-	top: "conv2_2"
-	name: "conv2_2_relu"
-	type: "ReLU"
-}
 
 layer {
     name : "conv2_3a"
@@ -393,9 +408,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv2_3a_sum"
+    top : "conv2_3a_sum"
+    bottom : "conv2_2"
+    bottom : "conv2_3a"
+}
+layer {
     name : "conv2_3b"
     type : "Convolution"
-    bottom : "conv2_3a"
+    bottom : "conv2_3a_sum"
     top : "conv2_3b"
     param {
       lr_mult: 1
@@ -442,21 +464,21 @@ layer {
 		bias_term: true
 	}
 }
+layer {
+	bottom: "conv2_3b"
+	top: "conv2_3b"
+	name: "conv2_3_relu"
+	type: "ReLU"
+}
 
 layer {
     type : "Eltwise"
     name : "conv2_3"
     top : "conv2_3"
+    bottom : "conv2_3a_sum"
     bottom : "conv2_3b"
-    bottom : "conv2_2"
 }
 
-layer {
-	bottom: "conv2_3"
-	top: "conv2_3"
-	name: "conv2_3_relu"
-	type: "ReLU"
-}
 layer {
     type : "Convolution"
     bottom : "conv2_3"
@@ -566,9 +588,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv3_1a_sum"
+    top : "conv3_1a_sum"
+    bottom : "conv3_1a"
+    bottom : "conv2_sub"
+}
+layer {
     name : "conv3_1b"
     type : "Convolution"
-    bottom : "conv3_1a"
+    bottom : "conv3_1a_sum"
     top : "conv3_1b"
     param {
       lr_mult: 1
@@ -615,21 +644,21 @@ layer {
 		bias_term: true
 	}
 }
+layer {
+	bottom: "conv3_1b"
+	top: "conv3_1b"
+	name: "conv3_1_relu"
+	type: "ReLU"
+}
 
 layer {
     type : "Eltwise"
     name : "conv3_1"
     top : "conv3_1"
+    bottom : "conv3_1a_sum"
     bottom : "conv3_1b"
-    bottom : "conv2_sub"
 }
 
-layer {
-	bottom: "conv3_1"
-	top: "conv3_1"
-	name: "conv3_1_relu"
-	type: "ReLU"
-}
 
 layer {
     name : "conv3_2a"
@@ -689,9 +718,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv3_2a_sum"
+    top : "conv3_2a_sum"
+    bottom : "conv3_1"
+    bottom : "conv3_2a"
+}
+layer {
     name : "conv3_2b"
     type : "Convolution"
-    bottom : "conv3_2a"
+    bottom : "conv3_2a_sum"
     top : "conv3_2b"
     param {
       lr_mult: 1
@@ -738,21 +774,21 @@ layer {
 		bias_term: true
 	}
 }
+layer {
+	bottom: "conv3_2b"
+	top: "conv3_2b"
+	name: "conv3_2_relu"
+	type: "ReLU"
+}
 
 layer {
     type : "Eltwise"
     name : "conv3_2"
     top : "conv3_2"
+    bottom : "conv3_2a_sum"
     bottom : "conv3_2b"
-    bottom : "conv3_1"
 }
 
-layer {
-	bottom: "conv3_2"
-	top: "conv3_2"
-	name: "conv3_2_relu"
-	type: "ReLU"
-}
 layer {
     name : "conv3_3a"
     type : "Convolution"
@@ -811,9 +847,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv3_3a_sum"
+    top : "conv3_3a_sum"
+    bottom : "conv3_2"
+    bottom : "conv3_3a"
+}
+layer {
     name : "conv3_3b"
     type : "Convolution"
-    bottom : "conv3_3a"
+    bottom : "conv3_3a_sum"
     top : "conv3_3b"
     param {
       lr_mult: 1
@@ -860,21 +903,21 @@ layer {
 		bias_term: true
 	}
 }
+layer {
+	bottom: "conv3_3b"
+	top: "conv3_3b"
+	name: "conv3_3_relu"
+	type: "ReLU"
+}
 
 layer {
     type : "Eltwise"
     name : "conv3_3"
     top : "conv3_3"
     bottom : "conv3_3b"
-    bottom : "conv3_2"
+    bottom : "conv3_3a_sum"
 }
 
-layer {
-	bottom: "conv3_3"
-	top: "conv3_3"
-	name: "conv3_3_relu"
-	type: "ReLU"
-}
 
 layer {
     bottom : "conv3_3"
@@ -984,9 +1027,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv4_1a_sum"
+    top : "conv4_1a_sum"
+    bottom : "conv3_sub"
+    bottom : "conv4_1a"
+}
+layer {
     name : "conv4_1b"
     type : "Convolution"
-    bottom : "conv4_1a"
+    bottom : "conv4_1a_sum"
     top : "conv4_1b"
     param {
       lr_mult: 1
@@ -1035,19 +1085,19 @@ layer {
 }
 
 layer {
-    type : "Eltwise"
-    name : "conv4_1"
-    top : "conv4_1"
-    bottom : "conv3_sub"
-    bottom : "conv4_1b"
-}
-
-layer {
-	bottom: "conv4_1"
-	top: "conv4_1"
+	bottom: "conv4_1b"
+	top: "conv4_1b"
 	name: "conv4_1_relu"
 	type: "ReLU"
 }
+layer {
+    type : "Eltwise"
+    name : "conv4_1"
+    top : "conv4_1"
+    bottom : "conv4_1a_sum"
+    bottom : "conv4_1b"
+}
+
 layer {
     name : "conv4_2a"
     type : "Convolution"
@@ -1105,9 +1155,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv4_2a_sum"
+    top : "conv4_2a_sum"
+    bottom : "conv4_1"
+    bottom : "conv4_2a"
+}
+layer {
     name : "conv4_2b"
     type : "Convolution"
-    bottom : "conv4_2a"
+    bottom : "conv4_2a_sum"
     top : "conv4_2b"
     param {
       lr_mult: 1
@@ -1154,21 +1211,21 @@ layer {
 		bias_term: true
 	}
 }
+layer {
+	bottom: "conv4_2b"
+	top: "conv4_2b"
+	name: "conv4_2_relu"
+	type: "ReLU"
+}
 
 layer {
     type : "Eltwise"
     name : "conv4_2"
     top : "conv4_2"
-    bottom : "conv4_1"
+    bottom : "conv4_2a_sum"
     bottom : "conv4_2b"
 }
 
-layer {
-	bottom: "conv4_2"
-	top: "conv4_2"
-	name: "conv4_2_relu"
-	type: "ReLU"
-}
 layer {
     name : "conv4_3a"
     type : "Convolution"
@@ -1226,9 +1283,16 @@ layer {
 	type: "ReLU"
 }
 layer {
+    type : "Eltwise"
+    name : "conv4_3a_sum"
+    top : "conv4_3a_sum"
+    bottom : "conv4_2"
+    bottom : "conv4_3a"
+}
+layer {
     name : "conv4_3b"
     type : "Convolution"
-    bottom : "conv4_3a"
+    bottom : "conv4_3a_sum"
     top : "conv4_3b"
     param {
       lr_mult: 1
@@ -1277,19 +1341,19 @@ layer {
 }
 
 layer {
-    type : "Eltwise"
-    name : "conv4_3"
-    top : "conv4_3"
-    bottom : "conv4_2"
-    bottom : "conv4_3b"
-}
-
-layer {
-	bottom: "conv4_3"
-	top: "conv4_3"
+	bottom: "conv4_3b"
+	top: "conv4_3b"
 	name: "conv4_3_relu"
 	type: "ReLU"
 }
+layer {
+    type : "Eltwise"
+    name : "conv4_3"
+    top : "conv4_3"
+    bottom : "conv4_3a_sum"
+    bottom : "conv4_3b"
+}
+
 
 layer {
     name : "global_pool"
