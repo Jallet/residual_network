@@ -51,7 +51,8 @@ layer {
         pad : 1
         kernel_size : 3
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
           type: "constant"
@@ -105,7 +106,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -161,7 +163,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -220,7 +223,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -276,7 +280,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -335,7 +340,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -391,7 +397,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -452,7 +459,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -508,7 +516,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -567,7 +576,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -623,7 +633,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -681,7 +692,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -737,7 +749,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -796,7 +809,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -852,7 +866,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -910,7 +925,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -966,7 +982,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -1024,7 +1041,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"
@@ -1080,7 +1098,8 @@ layer {
     }
     convolution_param {
         weight_filler {
-            type : "msra"
+            type : "res"
+            std : 0.001
         }
         bias_filler {
             type : "constant"

@@ -41,43 +41,11 @@ def main():
             num = num * v[0].data.shape[i]
         print("{}, {}, ({})".format(k, v[0].data.shape, num))
         param_num = param_num + num
+
     print "num of params: {}".format(param_num)
-    param = net.params["scale_conv1_down"][0].data
-    plt.figure(1)
-    plt.hist(param, 50, facecolor = 'g')
-    plt.title("param of scale_conv1_down")
-    bias = net.params["scale_conv1_down"][1].data
-    plt.figure(2)
-    plt.hist(bias, 50, facecolor = 'g')
-    plt.title("bias of scale_conv1_down")
-
-    param = net.params["scale_conv2_down"][0].data
-    plt.figure(3)
-    plt.hist(param, 50, facecolor = 'g')
-    plt.title("param of scale_conv2_down")
-    bias = net.params["scale_conv2_down"][1].data
-    plt.figure(4)
-    plt.hist(bias, 50, facecolor = 'g')
-    plt.title("bias of scale_conv2_down")
-
-    param = net.params["scale_conv3_down"][0].data
-    plt.figure(5)
-    plt.hist(param, 50, facecolor = 'g')
-    plt.title("param of scale_conv3_down")
-    bias = net.params["scale_conv3_down"][1].data
-    plt.figure(6)
-    plt.hist(bias, 50, facecolor = 'g')
-    plt.title("bias of scale_conv3_down")
-
-    param = net.params["scale_conv4_down"][0].data
-    plt.figure(7)
-    plt.hist(param, 50, facecolor = 'g')
-    plt.title("param of scale_conv4_down")
-    bias = net.params["scale_conv4_down"][1].data
-    plt.figure(8)
-    plt.hist(bias, 50, facecolor = 'g')
-    plt.title("bias of scale_conv4_down")
-    plt.show()
+    param = net.params["conv1"][0].data
+    #param = net.params["conv2_2a"][1].data
+    #print param
 
     print "finish"
 if __name__ == "__main__":
