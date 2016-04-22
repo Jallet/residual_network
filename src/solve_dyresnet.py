@@ -26,31 +26,39 @@ def argparser():
 
 def clean(net_num):
     print "cleaning"
+    child = subprocess.Popen("rm -rf results/loss/DyResNet-cifar", shell = True)
+    child.wait()
+    child = subprocess.Popen("rm -rf results/accuracy/DyResNet-cifar", shell = True)
+    child.wait()
+    child = subprocess.Popen("rm -rf results/snapshots/DyResNet-cifar", shell = True)
+    child.wait()
     for i in range(net_num):
-        child = subprocess.Popen("rm -rf results/loss/ResNet-cifar{}".format(i), shell = True)
+        child = subprocess.Popen("rm -rf results/loss/DyResNet-cifar{}".format(i), shell = True)
         child.wait()
-        child = subprocess.Popen("rm -rf results/snapshots/ResNet-cifar{}".format(i), shell = True)
+        child = subprocess.Popen("rm -rf results/snapshots/DyResNet-cifar{}".format(i), shell = True)
         child.wait()
-        child = subprocess.Popen("rm -rf results/snapshots/ResNet-cifar{}".format(i), shell = True)
+        child = subprocess.Popen("rm -rf results/snapshots/DyResNet-cifar{}".format(i), shell = True)
         child.wait()
 
 def init(net_num):
-    child = subprocess.Popen("mkdir -p results/loss/ResNet-cifar", shell = True)
+    child = subprocess.Popen("mkdir -p results/loss/DyResNet-cifar", shell = True)
     child.wait()
-    child = subprocess.Popen("mkdir -p results/accuracy/ResNet-cifar", shell = True)
+    child = subprocess.Popen("mkdir -p results/accuracy/DyResNet-cifar", shell = True)
+    child.wait()
+    child = subprocess.Popen("mkdir -p results/snapshots/DyResNet-cifar", shell = True)
     child.wait()
 
     for i in range(net_num):
-        child = subprocess.Popen("mkdir -p results/loss/ResNet-cifar{}".format(i), shell = True)
+        child = subprocess.Popen("mkdir -p results/loss/DyResNet-cifar{}".format(i), shell = True)
         child.wait()
-        child = subprocess.Popen("mkdir -p results/accuracy/ResNet-cifar{}".format(i), shell = True)
+        child = subprocess.Popen("mkdir -p results/accuracy/DyResNet-cifar{}".format(i), shell = True)
         child.wait()
-        child = subprocess.Popen("mkdir -p results/snapshots/ResNet-cifar{}".format(i), shell = True)
+        child = subprocess.Popen("mkdir -p results/snapshots/DyResNet-cifar{}".format(i), shell = True)
         child.wait()
 
 def main():
     default_max_iter = 6000
-    max_iters = [30000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000]
+    max_iters = [15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000]
     test_iter = 200
     record_iter = 20
     threshold = -100
@@ -61,9 +69,9 @@ def main():
     net_prefix = args.net_prefix
     solver_prefix = args.solver_prefix
     cmd = "src/solve_network.py"
-    snapshot_prefix = "results/snapshots/ResNet-cifar"
-    loss_prefix = "results/loss/ResNet-cifar"
-    acc_prefix = "results/accuracy/ResNet-cifar"
+    snapshot_prefix = "results/snapshots/DyResNet-cifar"
+    loss_prefix = "results/loss/DyResNet-cifar"
+    acc_prefix = "results/accuracy/DyResNet-cifar"
     print("cmd: {}".format(cmd))
     print("snapshot_prefix: {}".format(snapshot_prefix))
     print("loss_prefix: {}".format(loss_prefix))
@@ -78,19 +86,19 @@ def main():
     total_train_acc = []
     total_val_loss = []
     total_val_acc = []
-    total_train_loss_path = "results/loss/ResNet-cifar/ResNet-cifar-loss.train"
-    total_train_acc_path = "results/accuracy/ResNet-cifar/ResNet-cifar-acc.train"
-    total_val_loss_path = "results/loss/ResNet-cifar/ResNet-cifar-loss.val"
-    total_val_acc_path = "results/accuracy/ResNet-cifar/ResNet-cifar-acc.val"
+    total_train_loss_path = "results/loss/DyResNet-cifar/DyResNet-cifar-loss.train"
+    total_train_acc_path = "results/accuracy/DyResNet-cifar/DyResNet-cifar-acc.train"
+    total_val_loss_path = "results/loss/DyResNet-cifar/DyResNet-cifar-loss.val"
+    total_val_acc_path = "results/accuracy/DyResNet-cifar/DyResNet-cifar-acc.val"
     print("cmd: {}".format(cmd))
     for i in range(net_num):
         max_iter = max_iters[i]
         print max_iter
-        print "Training ResNet-cifar", i
-        loss_path = "{}{}/ResNet-cifar-loss".format(loss_prefix, i)
+        print "Training DyResNet-cifar", i
+        loss_path = "{}{}/DyResNet-cifar-loss".format(loss_prefix, i)
         train_loss = loss_path + ".train"
         val_loss = loss_path + ".val"
-        acc_path = "{}{}/ResNet-cifar-acc".format(acc_prefix, i)
+        acc_path = "{}{}/DyResNet-cifar-acc".format(acc_prefix, i)
         train_acc = acc_path + ".train"
         val_acc = acc_path + ".val"
         execute_cmd = ""
