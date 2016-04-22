@@ -9,7 +9,7 @@ stepvalue: 100000
 gamma: 0.1
 momentum: 0.9
 weight_decay: 0.0001
-snapshot_prefix: "results/snapshots/ResNet-cifar0/ResNet-cifar0"
+snapshot_prefix: "results/snapshots/DyResNet-cifar0/DyResNet-cifar0"
 test_initialization: false
 solver_mode: GPU
 type: "SGD"

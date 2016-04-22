@@ -1156,10 +1156,10 @@ layer {
     bottom : "conv4_1"
     top : "conv4_2a"
     param {
-      lr_mult : 0
+      lr_mult : 1
     }
     param {
-      lr_mult : 0
+      lr_mult : 2
     }
     convolution_param {
         weight_filler {
@@ -1197,10 +1197,10 @@ layer {
 	name: "scale_conv4_2a"
 	type: "Scale"
     param {
-        lr_mult : 0
+        lr_mult : 1
     }
     param {
-        lr_mult : 0
+        lr_mult : 2
     }
 	scale_param {
 		bias_term: true
@@ -1218,10 +1218,10 @@ layer {
     bottom : "conv4_2a"
     top : "conv4_2b"
     param {
-      lr_mult : 0
+      lr_mult : 1
     }
     param {
-      lr_mult : 0
+      lr_mult : 2
     }
     convolution_param {
         weight_filler {
@@ -1259,10 +1259,10 @@ layer {
 	name: "scale_conv4_2b"
 	type: "Scale"
     param {
-        lr_mult : 0
+        lr_mult : 1
     }
     param {
-        lr_mult : 0
+        lr_mult : 2
     }
 	scale_param {
 		bias_term: true
