@@ -327,6 +327,7 @@ layer {
     top : "conv2_2"
     bottom : "conv2_2b"
     bottom : "conv2_1"
+    bottom : "conv1"
 }
 
 layer {
@@ -745,6 +746,7 @@ layer {
     name : "conv3_2"
     top : "conv3_2"
     bottom : "conv3_2b"
+    bottom : "conv2_sub"
     bottom : "conv3_1"
 }
 
@@ -1162,6 +1164,7 @@ layer {
     name : "conv4_2"
     top : "conv4_2"
     bottom : "conv4_1"
+    bottom : "conv3_sub"
     bottom : "conv4_2b"
 }
 
