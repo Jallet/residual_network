@@ -93,6 +93,22 @@ layer {
 }
 
 layer {
+    bottom : "conv1"
+    top : "conv1_sub"
+    name : "conv1_sub"
+    type : "Scale"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
+    scale_param {
+        bias_term : true
+    }
+}
+
+layer {
     name : "conv2_1a"
     type : "Convolution"
     bottom : "conv1"
@@ -327,7 +343,7 @@ layer {
     top : "conv2_2"
     bottom : "conv2_2b"
     bottom : "conv2_1"
-    bottom : "conv1"
+    bottom : "conv1_sub"
 }
 
 layer {
