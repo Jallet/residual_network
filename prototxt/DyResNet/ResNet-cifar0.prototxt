@@ -217,24 +217,24 @@ layer {
 	}
 }
 
-layer {
-    type : "Eltwise"
-    name : "conv2_1"
-    top : "conv2_1"
-    bottom : "conv2_1b"
-    bottom : "conv1"
-}
+#layer {
+#    type : "Eltwise"
+#    name : "conv2_1"
+#    top : "conv2_1"
+#    bottom : "conv2_1b"
+#    bottom : "conv1"
+#}
 
 layer {
-	bottom: "conv2_1"
-	top: "conv2_1"
-	name: "conv2_1_relu"
+	bottom: "conv2_1b"
+	top: "conv2_1b"
+	name: "conv2_1b_relu"
 	type: "ReLU"
 }
 
 layer {
     name : "global_pool"
-    bottom : "conv2_1"
+    bottom : "conv2_1b"
 #    bottom : "conv4_1b"
     top : "global_pool"
     type : "Pooling"

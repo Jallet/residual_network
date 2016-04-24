@@ -8,11 +8,11 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    mean_file: "/home/liangjiang/code/residual_network-dy/data/cifar10/mean.binaryproto"
+    mean_file: "data/cifar10/mean.binaryproto"
     mirror : true
   }
   data_param {
-    source: "/home/liangjiang/code/residual_network-dy/data/cifar10/cifar10_train_lmdb"
+    source: "data/cifar10/cifar10_train_lmdb"
     batch_size: 256
     backend: LMDB
   }
@@ -26,10 +26,10 @@ layer {
     phase: TEST
   }
   transform_param {
-    mean_file: "/home/liangjiang/code/residual_network-dy/data/cifar10/mean.binaryproto"
+    mean_file: "data/cifar10/mean.binaryproto"
   }
   data_param {
-    source: "/home/liangjiang/code/residual_network-dy/data/cifar10/cifar10_test_lmdb"
+    source: "data/cifar10/cifar10_test_lmdb"
     batch_size: 100
     backend: LMDB
   }
@@ -217,25 +217,25 @@ layer {
 	}
 }
 
-layer {
-    type : "Eltwise"
-    name : "conv2_1"
-    top : "conv2_1"
-    bottom : "conv2_1b"
-    bottom : "conv1"
-}
+#layer {
+#    type : "Eltwise"
+#    name : "conv2_1"
+#    top : "conv2_1"
+#    bottom : "conv2_1b"
+#    bottom : "conv1"
+#}
 
 layer {
-	bottom: "conv2_1"
-	top: "conv2_1"
-	name: "conv2_1_relu"
+	bottom: "conv2_1b"
+	top: "conv2_1b"
+	name: "conv2_1b_relu"
 	type: "ReLU"
 }
 
 layer {
     name : "conv2_2a"
     type : "Convolution"
-    bottom : "conv2_1"
+    bottom : "conv2_1b"
     top : "conv2_2a"
     param {
       lr_mult: 1
@@ -351,24 +351,24 @@ layer {
 	}
 }
 
-layer {
-    type : "Eltwise"
-    name : "conv2_2"
-    top : "conv2_2"
-    bottom : "conv2_2b"
-    bottom : "conv2_1"
-}
+#layer {
+#    type : "Eltwise"
+#    name : "conv2_2"
+#    top : "conv2_2"
+#    bottom : "conv2_2b"
+#    bottom : "conv2_1"
+#}
 
 layer {
-	bottom: "conv2_2"
-	top: "conv2_2"
-	name: "conv2_2_relu"
+	bottom: "conv2_2b"
+	top: "conv2_2b"
+	name: "conv2_2b_relu"
 	type: "ReLU"
 }
 
 layer {
     name : "global_pool"
-    bottom : "conv2_2"
+    bottom : "conv2_2b"
 #    bottom : "conv4_1b"
     top : "global_pool"
     type : "Pooling"

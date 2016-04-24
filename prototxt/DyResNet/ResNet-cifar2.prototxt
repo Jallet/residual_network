@@ -217,25 +217,25 @@ layer {
 	}
 }
 
-layer {
-    type : "Eltwise"
-    name : "conv2_1"
-    top : "conv2_1"
-    bottom : "conv2_1b"
-    bottom : "conv1"
-}
+#layer {
+#    type : "Eltwise"
+#    name : "conv2_1"
+#    top : "conv2_1"
+#    bottom : "conv2_1b"
+#    bottom : "conv1"
+#}
 
 layer {
-	bottom: "conv2_1"
-	top: "conv2_1"
-	name: "conv2_1_relu"
+	bottom: "conv2_1b"
+	top: "conv2_1b"
+	name: "conv2_1b_relu"
 	type: "ReLU"
 }
 
 layer {
     name : "conv2_2a"
     type : "Convolution"
-    bottom : "conv2_1"
+    bottom : "conv2_1b"
     top : "conv2_2a"
     param {
       lr_mult : 1
@@ -351,25 +351,25 @@ layer {
 	}
 }
 
-layer {
-    type : "Eltwise"
-    name : "conv2_2"
-    top : "conv2_2"
-    bottom : "conv2_2b"
-    bottom : "conv2_1"
-}
+#layer {
+#    type : "Eltwise"
+#    name : "conv2_2"
+#    top : "conv2_2"
+#    bottom : "conv2_2b"
+#    bottom : "conv2_1"
+#}
 
 layer {
-	bottom: "conv2_2"
-	top: "conv2_2"
-	name: "conv2_2_relu"
+	bottom: "conv2_2b"
+	top: "conv2_2b"
+	name: "conv2_2b_relu"
 	type: "ReLU"
 }
 
 layer {
     name : "conv2_3a"
     type : "Convolution"
-    bottom : "conv2_2"
+    bottom : "conv2_2b"
     top : "conv2_3a"
     param {
       lr_mult : 1
@@ -485,23 +485,23 @@ layer {
 	}
 }
 
-layer {
-    type : "Eltwise"
-    name : "conv2_3"
-    top : "conv2_3"
-    bottom : "conv2_3b"
-    bottom : "conv2_2"
-}
+#layer {
+#    type : "Eltwise"
+#    name : "conv2_3"
+#    top : "conv2_3"
+#    bottom : "conv2_3b"
+#    bottom : "conv2_2"
+#}
 
 layer {
-	bottom: "conv2_3"
-	top: "conv2_3"
-	name: "conv2_3_relu"
+	bottom: "conv2_3b"
+	top: "conv2_3b"
+	name: "conv2_3b_relu"
 	type: "ReLU"
 }
 layer {
     name : "global_pool"
-    bottom : "conv2_3"
+    bottom : "conv2_3b"
 #    bottom : "conv4_1b"
     top : "global_pool"
     type : "Pooling"
