@@ -93,20 +93,56 @@ layer {
 }
 
 layer {
+    type : "Convolution"
     bottom : "conv1"
-    top : "conv1_sub"
-    name : "conv1_sub"
-    type : "Scale"
+    top : "conv1_sub2"
+    name : "conv1_sub2"
     param {
-        lr_mult : 1
+      lr_mult: 1
     }
     param {
-        lr_mult : 2
+      lr_mult: 2
     }
-    scale_param {
-        bias_term : true
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 32
+        kernel_size : 1
+        stride : 2
+    }
+
+}
+layer {
+	bottom: "conv1_sub2"
+	top: "conv1_sub2"
+	name: "bn_conv1_sub2"
+	type: "BatchNorm"
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
     }
 }
+
+layer {
+	bottom: "conv1_sub2"
+	top: "conv1_sub2"
+	name: "scale_conv1_sub2"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+
 
 layer {
     name : "conv2_1a"
@@ -343,7 +379,6 @@ layer {
     top : "conv2_2"
     bottom : "conv2_2b"
     bottom : "conv2_1"
-    bottom : "conv1_sub"
 }
 
 layer {
@@ -464,7 +499,6 @@ layer {
     type : "Eltwise"
     name : "conv2_3"
     top : "conv2_3"
-    bottom : "conv1"
     bottom : "conv2_3b"
     bottom : "conv2_2"
 }
@@ -520,6 +554,56 @@ layer {
 	bottom: "conv2_sub"
 	top: "conv2_sub"
 	name: "scale_conv2_sub"
+	type: "Scale"
+	scale_param {
+		bias_term: true
+	}
+}
+layer {
+    type : "Convolution"
+    bottom : "conv2_3"
+    top : "conv2_sub2"
+    name : "conv2_sub2"
+    param {
+      lr_mult: 1
+    }
+    param {
+      lr_mult: 2
+    }
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 64
+        kernel_size : 1
+        stride : 4
+    }
+
+}
+layer {
+	bottom: "conv2_sub2"
+	top: "conv2_sub2"
+	name: "bn_conv2_sub2"
+	type: "BatchNorm"
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+    param {
+        lr_mult : 0
+    }
+}
+
+layer {
+	bottom: "conv2_sub2"
+	top: "conv2_sub2"
+	name: "scale_conv2_sub2"
 	type: "Scale"
 	scale_param {
 		bias_term: true
@@ -639,6 +723,7 @@ layer {
     name : "conv3_1"
     top : "conv3_1"
     bottom : "conv3_1b"
+    bottom : "conv1_sub2"
     bottom : "conv2_sub"
 }
 
@@ -762,7 +847,6 @@ layer {
     name : "conv3_2"
     top : "conv3_2"
     bottom : "conv3_2b"
-    bottom : "conv2_sub"
     bottom : "conv3_1"
 }
 
@@ -885,7 +969,6 @@ layer {
     name : "conv3_3"
     top : "conv3_3"
     bottom : "conv3_3b"
-    bottom : "conv2_sub"
     bottom : "conv3_2"
 }
 
@@ -1058,6 +1141,7 @@ layer {
     type : "Eltwise"
     name : "conv4_1"
     top : "conv4_1"
+    bottom : "conv2_sub2"
     bottom : "conv3_sub"
     bottom : "conv4_1b"
 }
@@ -1180,7 +1264,6 @@ layer {
     name : "conv4_2"
     top : "conv4_2"
     bottom : "conv4_1"
-    bottom : "conv3_sub"
     bottom : "conv4_2b"
 }
 
