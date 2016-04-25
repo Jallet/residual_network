@@ -768,7 +768,7 @@ layer {
     bottom : "conv2_sub"
     top : "loss_rc"
     type : "EuclideanLoss"
-    loss_weight : 1e-5
+    loss_weight : 1e-4
 }
 
 layer {
