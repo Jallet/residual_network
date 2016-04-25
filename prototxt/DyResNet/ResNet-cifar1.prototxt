@@ -8,11 +8,11 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    mean_file: "data/cifar10/mean.binaryproto"
+    mean_file: "/home/liangjiang/code/residual_network-dy/data/cifar10/mean.binaryproto"
     mirror : true
   }
   data_param {
-    source: "data/cifar10/cifar10_train_lmdb"
+    source: "/home/liangjiang/code/residual_network-dy/data/cifar10/cifar10_train_lmdb"
     batch_size: 256
     backend: LMDB
   }
@@ -26,10 +26,10 @@ layer {
     phase: TEST
   }
   transform_param {
-    mean_file: "data/cifar10/mean.binaryproto"
+    mean_file: "/home/liangjiang/code/residual_network-dy/data/cifar10/mean.binaryproto"
   }
   data_param {
-    source: "data/cifar10/cifar10_test_lmdb"
+    source: "/home/liangjiang/code/residual_network-dy/data/cifar10/cifar10_test_lmdb"
     batch_size: 100
     backend: LMDB
   }
@@ -217,25 +217,25 @@ layer {
 	}
 }
 
-#layer {
-#    type : "Eltwise"
-#    name : "conv2_1"
-#    top : "conv2_1"
-#    bottom : "conv2_1b"
-#    bottom : "conv1"
-#}
+layer {
+    type : "Eltwise"
+    name : "conv2_1"
+    top : "conv2_1"
+    bottom : "conv2_1b"
+    bottom : "conv1"
+}
 
 layer {
-	bottom: "conv2_1b"
-	top: "conv2_1b"
-	name: "conv2_1b_relu"
+	bottom: "conv2_1"
+	top: "conv2_1"
+	name: "conv2_1_relu"
 	type: "ReLU"
 }
 
 layer {
     name : "conv2_2a"
     type : "Convolution"
-    bottom : "conv2_1b"
+    bottom : "conv2_1"
     top : "conv2_2a"
     param {
       lr_mult: 1
@@ -351,24 +351,24 @@ layer {
 	}
 }
 
-#layer {
-#    type : "Eltwise"
-#    name : "conv2_2"
-#    top : "conv2_2"
-#    bottom : "conv2_2b"
-#    bottom : "conv2_1"
-#}
+layer {
+    type : "Eltwise"
+    name : "conv2_2"
+    top : "conv2_2"
+    bottom : "conv2_2b"
+    bottom : "conv2_1"
+}
 
 layer {
-	bottom: "conv2_2b"
-	top: "conv2_2b"
-	name: "conv2_2b_relu"
+	bottom: "conv2_2"
+	top: "conv2_2"
+	name: "conv2_2_relu"
 	type: "ReLU"
 }
 
 layer {
     name : "global_pool"
-    bottom : "conv2_2b"
+    bottom : "conv2_2"
 #    bottom : "conv4_1b"
     top : "global_pool"
     type : "Pooling"
@@ -402,11 +402,54 @@ layer {
     bottom : "label"
     top : "accuracy"
 }
+layer {
+    name : "conv2_2b_rc"
+    bottom : "conv2_2b"
+    top : "conv2_2b_rc"
+    type : "Deconvolution"
+    param {
+        lr_mult : 1
+    }
+    param {
+        lr_mult : 2
+    }
+    convolution_param {
+        weight_filler {
+            type : "msra"
+        }
+        bias_filler {
+            type : "constant"
+            value : 0
+        }
+        num_output : 16
+        kernel_size : 3
+        pad : 1
+        stride : 1
+    }
+}
+layer {
+    name : "loss_classify"
+    bottom : "ip"
+    bottom : "label"
+    top : "loss_classify"
+    type : "SoftmaxWithLoss"
+    loss_weight : 1
+}
+
+layer {
+    name : "loss_rc"
+    bottom : "conv2_2b_rc"
+    bottom : "conv2_1b"
+    top : "loss_rc"
+    type : "EuclideanLoss"
+    loss_weight : 1e-5
+}
 
 layer {
     name : "loss"
-    bottom : "ip"
-    bottom : "label"
+    bottom : "loss_classify"
+    bottom : "loss_rc"
     top : "loss"
-    type : "SoftmaxWithLoss"
+    type : "Eltwise"
 }
+
