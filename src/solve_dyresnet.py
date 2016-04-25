@@ -39,6 +39,8 @@ def clean(net_num):
         child.wait()
         child = subprocess.Popen("rm -rf results/snapshots/DyResNet-cifar{}".format(i), shell = True)
         child.wait()
+        child = subprocess.Popen("rm -rf data/DyResNet-cifar{}/*".format(i+1), shell = True)
+        child.wait()
 
 def init(net_num):
     child = subprocess.Popen("mkdir -p results/loss/DyResNet-cifar", shell = True)
@@ -58,7 +60,10 @@ def init(net_num):
 
 def main():
     default_max_iter = 6000
-    max_iters = [15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000]
+    batch_size = 250
+    max_iters = [40, 40, 40, 40, 40, 40, 40, 40, 40]
+    max_epochs = [1, 1, 1 ,1, 1, 1, 1, 1, 1]
+    output_layers = ["conv1", "conv2_1", "conv2_2", "conv2_3", "conv3_1", "conv3_2", "conv3_3", "conv4_1"]
     test_iter = 200
     record_iter = 20
     threshold = -100
@@ -93,9 +98,12 @@ def main():
     print("cmd: {}".format(cmd))
     for i in range(net_num):
         max_iter = max_iters[i]
+        max_epoch = max_epochs[i] 
         print max_iter
         print "Training DyResNet-cifar", i
         loss_path = "{}{}/DyResNet-cifar-loss".format(loss_prefix, i)
+        train_output_path = "data/DyResNet-cifar{}/DyResNet_{}_train_lmdb".format(i + 1, output_layers[i])
+        test_output_path = "data/DyResNet-cifar{}/DyResNet_{}_test_lmdb".format(i + 1, output_layers[i])
         train_loss = loss_path + ".train"
         val_loss = loss_path + ".val"
         acc_path = "{}{}/DyResNet-cifar-acc".format(acc_prefix, i)
@@ -105,6 +113,8 @@ def main():
         if i == 0:
             execute_cmd = cmd \
             + " " + solver_prefix + str(i) + "-solver.prototxt" \
+            + " " + train_output_path \
+            + " " + test_output_path \
             + " --train-loss " + train_loss \
             + " --val-loss " + val_loss \
             + " --train-acc " + train_acc \
@@ -113,12 +123,16 @@ def main():
             + " --max_iter " + str(max_iter) \
             + " --record_iter " + str(record_iter) \
             + " --test_iter " + str(test_iter) \
-            + " -e"
+            + " --epoch " + str(max_epoch) \
+            + " --batch_size " + str(batch_size) \
+            + " --output_layer " + output_layers[i] 
         else:
             snapshot = snapshot_prefix \
                      + str(i - 1) + "/*.caffemodel"
             execute_cmd = cmd \
             + " " + solver_prefix + str(i) + "-solver.prototxt" \
+            + " " + train_output_path \
+            + " " + test_output_path \
             + " --train-loss " + train_loss \
             + " --val-loss " + val_loss \
             + " --train-acc " + train_acc \
@@ -128,7 +142,8 @@ def main():
             + " --max_iter " + str(max_iter)\
             + " --record_iter " + str(record_iter) \
             + " --test_iter " + str(test_iter)\
-            + " -e"\
+            + " --epoch " + str(max_epoch) \
+            + " --batch_size " + str(batch_size)
 
 
         print execute_cmd
