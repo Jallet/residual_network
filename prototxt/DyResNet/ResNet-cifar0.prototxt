@@ -8,11 +8,11 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    mean_file: "data/cifar10/mean.binaryproto"
+    mean_file: "data/DyResNet-cifar0/mean.binaryproto"
     mirror : true
   }
   data_param {
-    source: "data/cifar10/cifar10_train_lmdb"
+    source: "data/DyResNet-cifar0/cifar10_train_lmdb"
     batch_size: 256
     backend: LMDB
   }
@@ -26,10 +26,10 @@ layer {
     phase: TEST
   }
   transform_param {
-    mean_file: "data/cifar10/mean.binaryproto"
+    mean_file: "data/DyResNet-cifar0/mean.binaryproto"
   }
   data_param {
-    source: "data/cifar10/cifar10_test_lmdb"
+    source: "data/DyResNet-cifar0/cifar10_test_lmdb"
     batch_size: 100
     backend: LMDB
   }
