@@ -4,6 +4,7 @@ import caffe
 import argparse
 import numpy as np
 import lmdb
+import subprocess
 
 def argparser():
     parser = argparse.ArgumentParser()
@@ -86,6 +87,8 @@ def main():
     output_layer = args.output_layer
     batch_size = args.batch_size
     
+    batches = 200
+    
     train_output_lmdb = lmdb.open(train_output, map_size = int(1e12))
     test_output_lmdb = lmdb.open(test_output, map_size = int(1e12))
 
@@ -108,60 +111,72 @@ def main():
     cur_val_loss = np.zeros(record_iter)
     cur_val_acc = np.zeros(record_iter)
     
+    for i in range(max_iter):
+        solver.step(1)
+        cur_train_loss[i % record_iter] = solver.net.blobs["loss"].data
+        cur_train_acc[i % record_iter] = solver.net.blobs["accuracy"].data
+        cur_val_loss[i % record_iter] = solver.test_nets[0].blobs["loss"].data
+        cur_val_acc[i % record_iter] = solver.test_nets[0].blobs["accuracy"].data
+        if i % record_iter == record_iter - 1:
+            train_loss[i / record_iter] = np.average(cur_train_loss)
+            train_acc[i / record_iter] = np.average(cur_train_acc)
+            val_loss[i / record_iter] = np.average(cur_val_loss)
+            val_acc[i / record_iter] = np.average(cur_val_acc)
+
+            cur_train_loss = np.zeros(record_iter)
+            cur_train_acc = np.zeros(record_iter)
+            cur_val_loss = np.zeros(record_iter)
+            cur_val_acc = np.zeros(record_iter)
+
+            train_temp_loss = train_loss[0 : i / record_iter + 1]
+            train_temp_acc = train_acc[0 : i / record_iter + 1]
+            val_temp_loss = val_loss[0 : i / record_iter + 1]
+            val_temp_acc = val_acc[0 : i / record_iter + 1]
+            np.savetxt(train_loss_path, train_temp_loss)
+            np.savetxt(train_acc_path, train_temp_acc)
+            np.savetxt(val_loss_path, val_temp_loss)
+            np.savetxt(val_acc_path, val_temp_acc)
+    solver.snapshot()
+    child = subprocess.Popen("date", shell = True)
+    child.wait()
+    layer_size = len(solver.net.layers)
+    train_batch_size = solver.net.blobs["ip"].shape[0]
+    test_batch_size = solver.test_nets[0].blobs["ip"].shape[0]
+    print "train_batch_size: ", train_batch_size
+    print "test_batch_size: ", test_batch_size
     with train_output_lmdb.begin(write = True) as train_output_txn:
         with test_output_lmdb.begin(write = True) as test_output_txn:
-            for e in range(epoch):
-                for i in range(max_iter):
-                    solver.step(1)
-                    cur_train_loss[i % record_iter] = solver.net.blobs["loss"].data
-                    cur_train_acc[i % record_iter] = solver.net.blobs["accuracy"].data
-                    cur_val_loss[i % record_iter] = solver.test_nets[0].blobs["loss"].data
-                    cur_val_acc[i % record_iter] = solver.test_nets[0].blobs["accuracy"].data
-                    if i % record_iter == record_iter - 1:
-                        train_loss[i / record_iter] = np.average(cur_train_loss)
-                        train_acc[i / record_iter] = np.average(cur_train_acc)
-                        val_loss[i / record_iter] = np.average(cur_val_loss)
-                        val_acc[i / record_iter] = np.average(cur_val_acc)
+            for i in range(batches):
+                print "iter: ", i
+                solver.net._forward(0, layer_size - 1)
+                train_output = solver.net.blobs[output_layer].data
+                train_labels = solver.net.blobs["label"].data
+                print 'data.shape ', train_output.shape
+                print 'label.shape ', train_labels.shape
+                num = train_output.shape[0] 
+                for b in range(num):
+                    data = train_output[b, :, :, :]
+                    label = int(train_labels[b])
+                    #print "data.type ", type(data[1][1][1])
+                    #print "label.type ", type(label)
+                    datum = caffe.io.array_to_datum(data, label)
+                    keystr = "{:0>5d}".format(b + i * train_batch_size)
+                    train_output_txn.put(keystr, datum.SerializeToString())
 
-                        cur_train_loss = np.zeros(record_iter)
-                        cur_train_acc = np.zeros(record_iter)
-                        cur_val_loss = np.zeros(record_iter)
-                        cur_val_acc = np.zeros(record_iter)
-
-                        train_temp_loss = train_loss[0 : i / record_iter + 1]
-                        train_temp_acc = train_acc[0 : i / record_iter + 1]
-                        val_temp_loss = val_loss[0 : i / record_iter + 1]
-                        val_temp_acc = val_acc[0 : i / record_iter + 1]
-                        np.savetxt(train_loss_path, train_temp_loss)
-                        np.savetxt(train_acc_path, train_temp_acc)
-                        np.savetxt(val_loss_path, val_temp_loss)
-                        np.savetxt(val_acc_path, val_temp_acc)
-                        if epoch - 1 == e:
-                           train_output = solver.net.blobs[output_layer].data
-                           train_labels = solver.net.blobs["label"].data
-                           print 'data.shape ', train_output.shape
-                           print 'label.shape ', train_labels.shape
-                           num = train_output.shape[0] 
-                           for b in range(num):
-                               data = train_output[b, :, :, :]
-                               label = int(train_labels[b])
-                               #print "data.type ", type(data[1][1][1])
-                               #print "label.type ", type(label)
-                               datum = caffe.io.array_to_datum(data, label)
-                               keystr = '0>12d'.format(b + i * batch_size)
-                               train_output_txn.put(keystr, datum.SerializeToString())
-                           if max_iter -1 == i:
-                               test_output = solver.test_nets[0].blobs[output_layer].data
-                               test_labels = solver.test_nets[0].blobs["label"].data
-                               num = test_output.shape[0]
-                               for b in range(num):
-                                   data = test_output[b, :, :, :]
-                                   label = int(test_labels[b])
-                                   datum = caffe.io.array_to_datum(data, label)
-                                   keystr = '0>12d'.format(b + i * batch_size)
-                                   test_output_txn.put(keystr, datum.SerializeToString())
+                solver.test_nets[0]._forward(0, layer_size - 1)
+                test_output = solver.test_nets[0].blobs[output_layer].data
+                test_labels = solver.test_nets[0].blobs["label"].data
+                num = test_output.shape[0]
+                for b in range(num):
+                    data = test_output[b, :, :, :]
+                    label = int(test_labels[b])
+                    datum = caffe.io.array_to_datum(data, label)
+                    keystr = "{:0>5d}".format(b + i * test_batch_size)
+                    test_output_txn.put(keystr, datum.SerializeToString())
         test_output_lmdb.close()
     train_output_lmdb.close()
+    child = subprocess.Popen("date", shell = True)
+    child.wait()
                     #if early_stop and (i % test_iter == 0):
                     #    if i == 0:
                     #        pre_train_loss = cur_train_loss
@@ -170,7 +185,6 @@ def main():
                     #        pre_val_acc = cur_val_acc
                     #    elif (pre_train_loss - cur_train_loss) / pre_train_loss < threshold:
                     #        print "Converged, stopping...."
-    solver.snapshot()
 
 if __name__ == "__main__":
     main()
