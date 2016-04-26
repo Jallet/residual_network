@@ -61,9 +61,9 @@ def init(net_num):
 def main():
     default_max_iter = 6000
     batch_size = 250
-    max_iters = [40, 40, 40, 40, 40, 40, 40, 40, 40]
-    max_epochs = [1, 1, 1 ,1, 1, 1, 1, 1, 1]
-    output_layers = ["conv1", "conv2_1", "conv2_2", "conv2_3", "conv3_1", "conv3_2", "conv3_3", "conv4_1"]
+    max_iters = [15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000, 15000]
+#    max_epochs = [75, 75, 75 ,75, 75, 75, 75, 75, 75]
+    output_layers = ["conv1", "conv2_1", "conv2_2", "conv2_3", "conv3_1", "conv3_2", "conv3_3", "conv4_1", "conv4_2"]
     test_iter = 200
     record_iter = 20
     threshold = -100
@@ -98,7 +98,6 @@ def main():
     print("cmd: {}".format(cmd))
     for i in range(net_num):
         max_iter = max_iters[i]
-        max_epoch = max_epochs[i] 
         print max_iter
         print "Training DyResNet-cifar", i
         loss_path = "{}{}/DyResNet-cifar-loss".format(loss_prefix, i)
@@ -123,7 +122,6 @@ def main():
             + " --max_iter " + str(max_iter) \
             + " --record_iter " + str(record_iter) \
             + " --test_iter " + str(test_iter) \
-            + " --epoch " + str(max_epoch) \
             + " --batch_size " + str(batch_size) \
             + " --output_layer " + output_layers[i] 
         else:
@@ -142,8 +140,8 @@ def main():
             + " --max_iter " + str(max_iter)\
             + " --record_iter " + str(record_iter) \
             + " --test_iter " + str(test_iter)\
-            + " --epoch " + str(max_epoch) \
-            + " --batch_size " + str(batch_size)
+            + " --batch_size " + str(batch_size) \
+            + " --output_layer " + output_layers[i] 
 
 
         print execute_cmd
