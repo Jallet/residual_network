@@ -12,7 +12,7 @@ layer {
   }
   data_param {
     source: "data/DyResNet-cifar1/DyResNet_conv1_train_lmdb"
-    batch_size: 250
+    batch_size : 250
     backend: LMDB
   }
 }
@@ -25,8 +25,8 @@ layer {
     phase: TEST
   }
   data_param {
-    source: "data/DyResNet-cifar1/DyResNet_conv1__test_lmdb"
-    batch_size: 100
+    source: "data/DyResNet-cifar1/DyResNet_conv1_test_lmdb"
+    batch_size : 50
     backend: LMDB
   }
 }

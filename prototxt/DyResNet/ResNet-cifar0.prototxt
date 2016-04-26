@@ -13,7 +13,7 @@ layer {
   }
   data_param {
     source: "data/DyResNet-cifar0/cifar10_train_lmdb"
-    batch_size: 256
+    batch_size: 250
     backend: LMDB
   }
 }
@@ -30,7 +30,7 @@ layer {
   }
   data_param {
     source: "data/DyResNet-cifar0/cifar10_test_lmdb"
-    batch_size: 100
+    batch_size : 50
     backend: LMDB
   }
 }

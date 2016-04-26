@@ -26,7 +26,7 @@ layer {
   }
   data_param {
     source: "data/DyResNet-cifar4/DyResNet_conv2_3_test_lmdb"
-    batch_size: 100
+    batch_size : 50
     backend: LMDB
   }
 }
