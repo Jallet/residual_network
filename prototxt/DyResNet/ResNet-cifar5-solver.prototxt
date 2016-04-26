@@ -1,5 +1,5 @@
 net: "prototxt/DyResNet/ResNet-cifar5.prototxt"
-test_iter: 100
+test_iter: 200
 test_interval: 20
 display: 20
 average_loss: 20
